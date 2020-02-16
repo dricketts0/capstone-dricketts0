@@ -5,8 +5,8 @@ function currencyUS(amount) {
 };
 
 
-exports.showForm = (req, res) => {
-    res.render('expense-report')
+exports.showDash = (req, res) => {
+    res.render('user-dashboard')
 }
 
 exports.calculateExpenses = (req, res) => {

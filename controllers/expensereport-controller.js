@@ -1,12 +1,21 @@
+const path = require('path');
+
 function currencyUS(amount) {
     return new Intl.NumberFormat('en-US', 
      {style: 'currency', currency: 'USD'}
      ).format(amount);
 };
 
-
 exports.showDash = (req, res) => {
     res.render('user-dashboard')
+}
+
+// router.get('/expense-report', expenseController.reportPage);
+
+exports.reportPage = (req, res) => {
+    res.render('expense-report')
+    // res.sendFile('/Users/dricketts/backend-class/capstone/capstone-dricketts0/public/exreport.html');
+
 }
 
 exports.calculateExpenses = (req, res) => {

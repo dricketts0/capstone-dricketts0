@@ -1,21 +1,21 @@
 const Sequelize = require('sequelize');  
-
 const UserModel = require('./models/user');
 // const RoleModel = require('./models/role');
-
+const ReportModel = require('./models/expense-report')
 const sequelize = new Sequelize(process.env.DATABASE_URL); 
 
 
 const User = UserModel(sequelize, Sequelize); 
 // const Role = RoleModel(sequelize, Sequelize);
+const Report = ReportModel(sequelize, Sequelize); 
 
-// User.hasMany(Student);
-// Student.belongsTo(User);
+User.hasMany(Report);
+Report.belongsTo(User);
 // Role.hasMany(User);
 // User.belongsTo(Role);
 
 
-sequelize.sync({ force: true })
+sequelize.sync()
     .then( () => console.log('\nTables are created.\n'))
     // .then( () => { return Role.bulkCreate([
     //     {id: 0, name: 'Blocked'},
@@ -28,6 +28,7 @@ sequelize.sync({ force: true })
 module.exports = {
    
     User,
+    Report,
     // Role,
 }
 

@@ -6,7 +6,7 @@ exports.isLoggedIn = (req, res, next) => {
         return next();
     }
     req.session.redirectTo = req.url
-    res.redirect('login');
+    res.redirect('/login'); 
 };
 
 exports.registerPage = (req, res) => {

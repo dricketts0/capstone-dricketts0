@@ -1,5 +1,5 @@
 {{#if flashes}}
-    {{flashes.[0]}}
+{{flashes.[0]}}
 {{/if}}
 <br>
 <a href="/expense-report">Add a report</a>
@@ -7,21 +7,19 @@
 <h2>Total Expenses: {{expenseTotal}}</h2>
 <br>
 <br>
-<!--
-    <h1>Travel Budget</h1>
+
+<h1>Expense Reports</h1>
 <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Date</th>
-                <th>Event Purpose</th>
-                <th>Total Expenses</th>
-            </tr>
-        </thead>
+    <thead class="thead-dark">
         <tr>
-            <td> </td>
-            <td> </td>
-            <td> </td>
+            <th>Report Number</th>
+            <th>Airfare</th>
         </tr>
-       
+    </thead>
+    {{#each reports}}
+    <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.airfare}}</td>
+    </tr>
+    {{/each}}
 </table>
--->

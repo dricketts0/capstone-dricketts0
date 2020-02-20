@@ -26,5 +26,8 @@
     "passport-local-sequelize": "^0.9.0",
     "pg": "^7.18.1",
     "sequelize": "^5.21.4"
+  },
+  "devDependencies": {
+    "handlebars": "^4.5.0"
   }
 }

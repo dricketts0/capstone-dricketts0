@@ -1,9 +1,6 @@
 const router = require('express').Router(); 
 const expenseController = require('../controllers/expensereport-controller')
 const authController = require('../controllers/auth-controller');
-const passport = require('passport');
-
-
 
 router.get('/register', authController.registerPage);
 router.post('/register', authController.registerUser, authController.loginUser);

@@ -15,7 +15,7 @@ Report.belongsTo(User);
 // User.belongsTo(Role);
 
 
-sequelize.sync()
+sequelize.sync({ force: true })
     .then( () => console.log('\nTables are created.\n'))
     // .then( () => { return Role.bulkCreate([
     //     {id: 0, name: 'Blocked'},

@@ -1,4 +1,5 @@
 const Report = require('../db').Report;
+const User = require('../db').User;
 
 // function currencyUS(amount) {
 //     return new Intl.NumberFormat('en-US', 
@@ -7,8 +8,9 @@ const Report = require('../db').Report;
 // };
 
 exports.showDash = async (req, res) => {
-    let reports = await Report.findAll({ where: { userId: req.user.id }})
-    res.render('user-dashboard', { reports: reports, flashes: req.flash('success')})
+    let reports = await Report.findAll({ where: { id: req.user.id }})
+    let user = await User.findAll({ where: { id: req.user.id }})
+    res.render('user-dashboard', { user, reports, flashes: req.flash('success')})
 }
 
 exports.reportPage = (req, res) => {
@@ -35,10 +37,9 @@ exports.calculateExpenses = async (req, res) => {
             value = 0;
         }
         let expense = Number.parseFloat(value);
-        req.body.expenseTotal += expense ;
-        
-    }
-        
+        req.body.expenseTotal += expense;
+    };
+
     await Report.upsert(req.body);
     res.redirect('/');
 }

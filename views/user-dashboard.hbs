@@ -1,25 +1,51 @@
 {{#if flashes}}
 {{flashes.[0]}}
 {{/if}}
+<br>
+<a href="/expense-req">Add an Expense Requisition</a>
+<br>
+<h1>Requisitions for: {{user.[0].username}}</h1>
 <br><br>
-<a href="/expense-report">Add a report</a>
-<br>
-<br>
-<h1>Expense Reports for:  {{user.[0].username}}</h1>
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
-            <th>Report Number</th>
-            <th>Total of Expenses</th>
-            <th>Airfare</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Expense Req Number</th>
+            <th>Funds Encumbered</th>
+
         </tr>
     </thead>
-    {{#each reports}}
+    {{#each requisitions}}
     <tr>
+        <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Edit
+                Requisition</a></td>
+        <td><a href="/expense-report/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Add
+                Expense Report</a></td>
+        <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button"
+                aria-pressed="false">Delete</a>
         <td>{{this.id}}</td>
-        <td>$ {{this.expenseTotal}}</td>
-        <td>$ {{this.airfare}}</td>
-    </tr>
+        <td>$ {{this.encumbered}}</td>
+   </tr>
     {{/each}}
-</table>
-<script src="./expense.js"></script>
+  
+    <br><br>
+    <h1>Expense Reports for: {{user.[0].username}}</h1>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Report Number</th>
+                <th>Total of Expenses</th>
+                <th>Airfare</th>
+            </tr>
+        </thead>
+        {{#each reports}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>$ {{this.expenseTotal}}</td>
+            <td>$ {{this.airfare}}</td>
+        </tr>
+        {{/each}}
+    </table>
+    <script src="./expense.js"></script>

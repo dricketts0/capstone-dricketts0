@@ -1,10 +1,9 @@
 <div class="container-fluid">
     <br><br>
-    <h2> Expense Report </h2>
+    <h2> Expense Requisition </h2>
     <br><br>
-    <form action="/submitExpenses" method="POST">
-        <input type="hidden" name="expenseTotal" value="" />
-        <div id="expenses">
+    <form action="/submitReq" method="POST">
+        <div>
             Airfare: $<input type="number" placeholder="0.00" step="0.01" name="airfare" />
             <br>
             Baggage: $<input type="number" placeholder="0.00" step="0.01" name="baggage" />
@@ -19,11 +18,8 @@
             <br>
             Taxi: $<input type="number" placeholder="0.00" step="0.01" name="taxi" />
         </div>
-        <br>
         <input type="hidden" name="id" />
+        <br><br>
         <button type="submit" id="calculateButton">Calculate</button>
-        <br>
-        <button type="button" id="mealButton">Meals</button>
     </form>
 </div>
-<script src="./expense.js"></script>

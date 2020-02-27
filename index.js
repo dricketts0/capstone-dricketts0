@@ -1,7 +1,7 @@
 require('dotenv').config();
 require('./db');
 const User = require('./db').User;
-const express = require('express'); 
+const express = require('express');
 const exphbs = require('express-handlebars');
 const routes = require('./routes');
 const passport = require('passport');
@@ -11,7 +11,7 @@ const flash = require('connect-flash');
 const app = express();
 
 app.use(express.static('public'));
-app.use(session({ secret: 'SpringCap2020'}));
+app.use(session({ secret: 'SpringCap2020' }));
 app.use(flash());
 
 app.use(passport.initialize());
@@ -26,8 +26,8 @@ app.engine('hbs', exphbs({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
 
 app.use(express.urlencoded({ extended: true }));
-app.use(routes);  
+app.use(routes);
 
 const listener = app.listen(3000, () => {
-    console.log('server listening on port ' + listener.address().port);
+  console.log('server listening on port ' + listener.address().port);
 });

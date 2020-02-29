@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <br><br>
+    <h2> 
+        {{#if requisition}} Edit Expense Requisition {{else}} Add Expense Requisition {{/if}}
+        </h2>
+    <br><br>
+    <form action="/submitReq" method="POST">
+        <div>
+            Funds Encumbered: $<input type="number" placeholder="0.00" step="0.01" name="encumbered" value="{{requisition.encumbered}}" />
+            <br>
+        </div>
+        <input type="hidden" name="id" value="{{requisition.id}}"/>
+        <input type="hidden" name="totalSpent" value="{{requisition.totalSpent}}"/>
+        <input type="hidden" name="balance" value="{{requisition.balance}}"/>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>

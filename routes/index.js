@@ -10,9 +10,10 @@ router.get('/logout', authController.logoutUser);
 
 router.use(authController.isLoggedIn);
 router.get('/', expenseController.showDash);
-router.get('/expense-req', expenseController.reqPage);
-router.post('/submitReq', expenseController.addRequisition);
-router.get('/expense-report', expenseController.reportPage);
+router.get('/addReq', expenseController.addRequisition);
+router.post('/submitReq', expenseController.submitRequisition);
+router.get('/editReq/:id', expenseController.editRequisition)
+router.get('/addReport/:id', expenseController.addReport);
 router.post('/submitExpenses', expenseController.calculateExpenses);
-
+ 
 module.exports = router;

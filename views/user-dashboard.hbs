@@ -1,11 +1,10 @@
 {{#if flashes}}
 {{flashes.[0]}}
 {{/if}}
-<br>
-<a href="/expense-req">Add an Expense Requisition</a>
-<br>
-<h1>Requisitions for: {{user.[0].username}}</h1>
+<br>  
+<a href="/addReq">Add an Expense Requisition</a>
 <br><br>
+<h1>Requisitions for: {{user.[0].username}}</h1>
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
@@ -14,38 +13,54 @@
             <th></th>
             <th>Expense Req Number</th>
             <th>Funds Encumbered</th>
+            <th>Total Spent</th>
+            <th>Remaining Balance</th>
 
         </tr>
     </thead>
-    {{#each requisitions}}
+    {{#each requisition}}
     <tr>
         <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Edit
                 Requisition</a></td>
-        <td><a href="/expense-report/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Add
+        <td><a href="/addReport/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Add
                 Expense Report</a></td>
         <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button"
-                aria-pressed="false">Delete</a>
+                aria-pressed="false">Delete Requisition</a>
         <td>{{this.id}}</td>
         <td>$ {{this.encumbered}}</td>
+        <td>$ {{this.totalSpent}}</td>
+        <td>$ {{this.balance}}</td>
    </tr>
     {{/each}}
-  
+</table> 
     <br><br>
-    <h1>Expense Reports for: {{user.[0].username}}</h1>
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Report Number</th>
-                <th>Total of Expenses</th>
-                <th>Airfare</th>
-            </tr>
-        </thead>
-        {{#each reports}}
+<h1>Expense Reports for: {{user.[0].username}}</h1>
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
-            <td>{{this.id}}</td>
-            <td>$ {{this.expenseTotal}}</td>
-            <td>$ {{this.airfare}}</td>
+            <th>Requisition Number</th>
+            <th>Report Number</th>
+            <th>Total of Expenses</th>
+            <th>Airfare</th>
+            <th>Baggage</th>
+            <th>Lodging</th>
+            <th>Meals</th>
+            <th>Parking</th>
+            <th>Taxi</th>
         </tr>
-        {{/each}}
-    </table>
-    <script src="./expense.js"></script>
+    </thead>
+    {{#each report}}
+    <tr>
+        <td>{{this.requisitionId}}</td>
+        <td>{{this.id}}</td>
+        <td>$ {{this.expenseTotal}}</td>
+        <td>$ {{this.airfare}}</td>
+        <td>$ {{this.baggage}}</td>
+        <td>$ {{this.lodging}}</td>
+        <td>$ {{this.meals}}</td>
+        <td>$ {{this.parking}}</td>
+        <td>$ {{this.taxi}}</td>
+    </tr>
+    {{/each}}
+</table>
+  

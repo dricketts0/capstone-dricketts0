@@ -1,9 +1,12 @@
 <div class="container-fluid">
     <br><br>
-    <h2> Expense Requisition </h2>
+    <h2>Encumbered Funds for Requisition#{{requisition.id}}:  {{requisition.encumbered}}</h2>
     <br><br>
-    <form action="/submitReq" method="POST">
-        <div>
+    <h2> Expense Report </h2>
+    <br><br>
+    <form action="/submitExpenses" method="POST">
+        <input type="hidden" name="expenseTotal" value="" />
+        <div id="expenses">
             Airfare: $<input type="number" placeholder="0.00" step="0.01" name="airfare" />
             <br>
             Baggage: $<input type="number" placeholder="0.00" step="0.01" name="baggage" />
@@ -18,8 +21,12 @@
             <br>
             Taxi: $<input type="number" placeholder="0.00" step="0.01" name="taxi" />
         </div>
-        <input type="hidden" name="id" />
-        <br><br>
+        <br>
+        {{!-- <input type="hidden" name="id" /> --}}
+        <input type="hidden" name="requisitionId" value="{{requisition.id}}" />
         <button type="submit" id="calculateButton">Calculate</button>
+        <br>
+        <button type="button" id="mealButton">Meals</button>
     </form>
 </div>
+{{!-- <script src="./expense.js"></script> --}}

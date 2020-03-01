@@ -8,8 +8,14 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
       },
       encumbered: Sequelize.STRING,
-      totalSpent: Sequelize.STRING,
-      balance: Sequelize.STRING,
+      totalSpent: {
+        type: Sequelize.DECIMAL(10,2),
+        defaultValue: 0.00
+      },
+      balance: {
+        type: Sequelize.DECIMAL(10,2),
+        defaultValue: 0.00
+      },
     },
     { freezeTableName: true },
   );

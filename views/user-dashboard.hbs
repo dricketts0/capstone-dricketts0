@@ -2,7 +2,7 @@
 {{flashes.[0]}}
 {{/if}}
 <br>  
-<a href="/addReq">Add an Expense Requisition</a>
+<a href="/addReq" class="btn btn-info float-right">Add an Expense Requisition</a>
 <br><br>
 <h1>Requisitions for: {{user.[0].username}}</h1>
 <table class="table table-striped">
@@ -15,17 +15,13 @@
             <th>Funds Encumbered</th>
             <th>Total Spent</th>
             <th>Remaining Balance</th>
-
         </tr>
     </thead>
     {{#each requisition}}
     <tr>
-        <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Edit
-                Requisition</a></td>
-        <td><a href="/addReport/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Add
-                Expense Report</a></td>
-        <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button"
-                aria-pressed="false">Delete Requisition</a>
+        <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
+        <td><a href="/addReport/{{this.id}}" class="btn btn-secondary" data-toggle="button">Add Expense Report</a></td>
+        <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
         <td>{{this.id}}</td>
         <td>$ {{this.encumbered}}</td>
         <td>$ {{this.totalSpent}}</td>
@@ -38,28 +34,32 @@
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
-            <th>Requisition Number</th>
-            <th>Report Number</th>
-            <th>Total of Expenses</th>
-            <th>Airfare</th>
-            <th>Baggage</th>
-            <th>Lodging</th>
-            <th>Meals</th>
-            <th>Parking</th>
-            <th>Taxi</th>
+            <th class="align-middle">Requisition Number</th>
+            <th class="align-middle">Report Number</th>
+            <th class="align-middle">Total of Expenses</th>
+            <th class="align-middle">Airfare</th>
+            <th class="align-middle">Baggage</th>
+            <th class="align-middle">Lodging</th>
+            <th class="align-middle">Meals</th>
+            <th class="align-middle">Mileage</th>
+            <th class="align-middle">Car Rental</th>          
+            <th class="align-middle">Parking</th>
+            <th class="align-middle">Taxi</th>
         </tr>
     </thead>
     {{#each report}}
     <tr>
         <td>{{this.requisitionId}}</td>
         <td>{{this.id}}</td>
-        <td>$ {{this.expenseTotal}}</td>
-        <td>$ {{this.airfare}}</td>
-        <td>$ {{this.baggage}}</td>
-        <td>$ {{this.lodging}}</td>
-        <td>$ {{this.meals}}</td>
-        <td>$ {{this.parking}}</td>
-        <td>$ {{this.taxi}}</td>
+        <td>{{this.expenseTotal}}</td>
+        <td>{{this.airfare}}</td>
+        <td>{{this.baggage}}</td>
+        <td>{{this.lodging}}</td>
+        <td>{{this.meals}}</td>
+        <td>{{this.mileage}}</td>
+        <td>{{this.carRental}}</td>
+        <td>{{this.parking}}</td>
+        <td>{{this.taxi}}</td>
     </tr>
     {{/each}}
 </table>

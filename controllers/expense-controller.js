@@ -10,9 +10,9 @@ const User = require('../db').User;
 
 exports.showDash = async (req, res) => {
   let requisition = await Requisition.findAll({
-    where: { userId: req.user.id },
+    where: { userId: req.user.id }, order: [['id', 'DESC']]
   });
-  let report = await Report.findAll({ where: { userId: req.user.id } });
+  let report = await Report.findAll({ where: { userId: req.user.id }, order: [['requisitionId', 'ASC']] });
   let user = await User.findAll({ where: { id: req.user.id } });
   res.render('user-dashboard', {
     user,
@@ -54,8 +54,9 @@ exports.calculateExpenses = async (req, res) => {
     expenseTotal: req.body.expenseTotal,
     airfare: req.body.airfare,
     baggage: req.body.baggage,
-    carRental: req.body.carRental,
     lodging: req.body.lodging,
+    mileage: req.body.mileage,
+    carRental: req.body.carRental,
     meals: req.body.meals,
     parking: req.body.parking,
     taxi: req.body.taxi,
@@ -65,15 +66,43 @@ exports.calculateExpenses = async (req, res) => {
     if (value == '') {
       value = 0;
     }
-
     expenses[key] = Number.parseFloat(value);
     expenses.expenseTotal += expenses[key];
   }
   expenses.requisitionId = req.body.requisitionId;
   expenses.userId = req.user.id;
 
-  console.log(expenses);
+  // console.log(expenses);
+  // console.log(req.body)
 
+  
+  let requisition = await Requisition.findByPk(expenses.requisitionId);
+  // console.log(requisition);
+  let encumbered = await requisition.encumbered;
+  let totalSpent = await requisition.totalSpent;
+  let balance = await requisition.balance;
+
+  // let encumbered = await requisition.encumbered
+  // console.log(totalSpent);
+  // console.log(encumbered);
+  
+  let newTotal = Number.parseFloat(totalSpent)
+  newTotal = newTotal + Number.parseFloat(expenses.expenseTotal);
+
+  let newBalance = Number.parseFloat(balance);
+  newBalance = Number.parseFloat(encumbered) - newTotal;
+  
+  console.log(newTotal);
+  
+  let reqObj = {
+    id: expenses.requisitionId,
+    encumbered: encumbered,
+    totalSpent: newTotal,
+    balance: newBalance,
+  }
+  
+  // console.log(reqObj);
+  await Requisition.upsert(reqObj);
   await Report.upsert(expenses);
   res.redirect('/');
 };

@@ -26,6 +26,11 @@ app.engine('hbs', exphbs({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
 
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  res.locals.title = 'Team Expense!';
+  next();
+})
 app.use(routes);
 
 const listener = app.listen(3000, () => {

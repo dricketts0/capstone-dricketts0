@@ -16,7 +16,7 @@
         </thead>
     </table>
     
-    <form action="/submitExpenses" method="POST">
+    <form action="/updateExpenses" method="POST">
         <h5 class="alert alert-info">Expense Report Draft</h5>
         <div class="form-group row">
             
@@ -24,14 +24,14 @@
                 <label for="airfareInput" class="col-form-label">Airfare</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="airfareInput" placeholder="0.00" step="0.01" name="airfare"/>
+                <input type="number" class="form-control" id="airfareInput" placeholder="0.00" value="{{report.airfare}}" step="0.01" name="airfare"/>
             </div>
             <div class="form-group col-sm-1"></div>
             <div class="form-group col-sm-2" align="center">
                 <label for="mileageInput" class="col-form-label">Mileage</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="mileageInput" placeholder="0.00" step="0.01" name="mileage"/>
+                <input type="number" class="form-control" id="mileageInput" placeholder="0.00" value="{{report.mileage}}"step="0.01" name="mileage"/>
             </div>
             <div class="form-group col-sm-1"></div>
         </div>
@@ -40,14 +40,14 @@
                 <label for="baggageInput" class="col-form-label">Baggage</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="baggageInput" placeholder="0.00" step="0.01" name="baggage"/>
+                <input type="number" class="form-control" id="baggageInput" placeholder="0.00" value="{{report.baggage}}" step="0.01" name="baggage"/>
             </div>
             <div class="form-group col-sm-1"></div>
             <div class="form-group col-sm-2" align="center">
                 <label for="carRentalInput" class="col-form-label">Car Rental</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="carRentalInput" placeholder="0.00" step="0.01" name="carRental"/>
+                <input type="number" class="form-control" id="carRentalInput" placeholder="0.00" value="{{report.carRental}}" step="0.01" name="carRental"/>
             </div>
             <div class="form-group col-sm-1"></div>
         </div>
@@ -56,14 +56,14 @@
                 <label for="lodgingInput" class="col-form-label">Lodging</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="lodgingInput" placeholder="0.00" step="0.01" name="lodging"/>
+                <input type="number" class="form-control" id="lodgingInput" placeholder="0.00" value="{{report.lodging}}" step="0.01" name="lodging"/>
             </div>
             <div class="form-group col-sm-1"></div>
             <div class="form-group col-sm-2" align="center">
                 <label for="parkingInput" class="col-form-label">Parking</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="parkingInput" placeholder="0.00" step="0.01" name="parking"/>
+                <input type="number" class="form-control" id="parkingInput" placeholder="0.00" value="{{report.parking}}" step="0.01" name="parking"/>
             </div>
             <div class="form-group col-sm-1"></div>
         </div>
@@ -72,21 +72,22 @@
                 <label for="mealsInput" class="col-form-label">Meals</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="mealsInput" placeholder="0.00" step="0.01" name="meals"/>
+                <input type="number" class="form-control" id="mealsInput" placeholder="0.00" value="{{report.meals}}" step="0.01" name="meals"/>
             </div>
             <div class="form-group col-sm-1"></div>
             <div class="form-group col-sm-2" align="center">
                 <label for="taxiInput" class="col-form-label">Taxi</label>
             </div>
             <div class="form-group col-sm-3">
-                <input type="number" class="form-control" id="taxiInput" placeholder="0.00" step="0.01" name="taxi"/>
+                <input type="number" class="form-control" id="taxiInput" placeholder="0.00" value="{{report.taxi}}" step="0.01" name="taxi"/>
             </div>
             <div class="form-group col-sm-1"></div>
             <br><br>
         </div>
-        <input type="hidden" name="expenseTotal" value=""/>
+        <input type="hidden" value="0" name="expenseTotal"/>
         {{!-- <input type="hidden" name="id" /> --}}
         <input type="hidden" name="requisitionId" value="{{requisition.id}}" />
+        <input type="hidden" name="id" value="{{report.id}}"/>
         <button type="submit" class="float-right" id="calculateButton">Calculate</button>
        
         {{!-- <button type="button" id="mealButton">Meals</button> --}}

@@ -34,6 +34,8 @@
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
+            <th></th>
+            <th></th>
             <th class="align-middle">Requisition Number</th>
             <th class="align-middle">Report Number</th>
             <th class="align-middle">Total of Expenses</th>
@@ -49,6 +51,8 @@
     </thead>
     {{#each report}}
     <tr>
+        <td><a href="/editReport/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
+        <td><a href="/deleteReport/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
         <td>{{this.requisitionId}}</td>
         <td>{{this.id}}</td>
         <td>{{this.expenseTotal}}</td>

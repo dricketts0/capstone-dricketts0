@@ -7,7 +7,10 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      encumbered: Sequelize.STRING,
+      encumbered: {
+        type: Sequelize.DECIMAL(10,2),
+        defaultValue: 0.00
+      },
       totalSpent: {
         type: Sequelize.DECIMAL(10,2),
         defaultValue: 0.00

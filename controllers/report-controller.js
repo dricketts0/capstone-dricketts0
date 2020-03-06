@@ -46,6 +46,12 @@ exports.calculateExpenses = async (req, res) => {
     encumbered: encumbered,
     totalSpent: newTotal,
     balance: newBalance,
+    departureDate: req.body.departureDate,
+    returnDate: req.body.returnDate,
+    departLocation: req.body.departLocation,
+    destination: req.body.destination,
+    purpose: req.body.purpose,
+    objectives: req.body.objectives,
   };
 
   await Requisition.upsert(updatedReqObj);
@@ -104,6 +110,12 @@ exports.updateExpenses = async (req, res) => {
     encumbered: encumbered,
     totalSpent: newExpenses.expenseTotal,
     balance: balance,
+    departureDate: req.body.departureDate,
+    returnDate: req.body.returnDate,
+    departLocation: req.body.departLocation,
+    destination: req.body.destination,
+    purpose: req.body.purpose,
+    objectives: req.body.objectives,
   };
 
   await Requisition.upsert(updatedReqObj);

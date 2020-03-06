@@ -14,7 +14,11 @@ exports.isLoggedIn = (req, res, next) => {
 };
 
 exports.registerPage = (req, res) => {
-  res.render('register', { flashes: req.flash('error') });
+  res.render('register-login', {
+    action: 'register',
+    buttonText: 'Register',
+    flashes: req.flash('error'),
+  });
 };
 
 exports.registerUser = (req, res, next) => {
@@ -24,7 +28,10 @@ exports.registerUser = (req, res, next) => {
   User.register(username, password, (error, registeredUser) => {
     if (error) {
       console.log(error);
-      res.status(500).send().redirect('/register');
+      res
+        .status(500)
+        .send()
+        .redirect('/login');
     }
     req.flash('success', 'Welcome new user: ' + username);
     next();
@@ -32,7 +39,11 @@ exports.registerUser = (req, res, next) => {
 };
 
 exports.loginPage = (req, res) => {
-  res.render('login', { flashes: req.flash('error') });
+  res.render('register-login', {
+    action: 'login',
+    buttonText: 'Login',
+    flashes: req.flash('error'),
+  });
 };
 
 exports.loginUser = (req, res, next) => {
@@ -43,11 +54,28 @@ exports.loginUser = (req, res, next) => {
     successRedirect: redirect,
     failureRedirect: '/login',
     failureFlash: true,
-    successFlash: 'Welcome', 
+    successFlash: 'Welcome',
   })(req, res, next);
 };
 
+exports.adminLogin = (req, res) => {
+  res.render('login-admin', { flashes: req.flash('error') });
+};
+
+exports.logAdmin = (req, res, next) => {
+
+  passport.authenticate('local', {
+    successRedirect: '/admin',
+    failureRedirect: '/',
+    failureFlash: true,
+    successFlash: 'Welcome',
+  })(req, res, next);
+};
+
+// router.get('/logAdmin', authController.adminLogin);
+// router.post('/logAdmin', authController.logAdmin);
+
 exports.logoutUser = (req, res) => {
-  req.logOut(); //provided by passport
+  req.logOut();
   res.redirect('/login');
 };

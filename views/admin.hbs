@@ -1,0 +1,29 @@
+<h1>LIST of USERS</h1>
+<br>
+<br>
+<form action="/updateRoles" method ="post">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        {{#each users}}
+        <tr>
+            <td> {{this.id}} </td>
+            <td> {{this.username}} </td>
+            <td> 
+                <select name="{{this.id}}">
+                    {{#each this.roles }}
+                    <option value='{{this.id}}'{{#if this.selected}}selected{{/if}}>{{ this.name }}</option>
+                    {{/each}}
+                    
+                </select>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <button class="btn btn-info" type="submit">Submit</button>
+</form>

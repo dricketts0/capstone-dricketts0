@@ -8,15 +8,16 @@
         <div>
             Funds Encumbered $<input type="number" placeholder="0.00" step="0.01" name="encumbered"/>
             <br>
-            Date of Departure <input type="text" placeholder="MM/DD/YYYY" name="departureDate"/>
+            Date of Departure <input type="text" placeholder="MM/DD/YYYY" maxlength="10" name="departureDate"/>
             <br>
-            Date of Return <input type="text" placeholder="MM/DD/YYYY" name="returnDate"/>
+            Date of Return <input type="text" placeholder="MM/DD/YYYY" maxlength="10" name="returnDate"/>
             <br>
             Location of Departure <input type="text" name="departLocation"/>
             <br>
             Destination <input type="text" name="destination"/>
             <br>
             Purpose of Event <input type="text" name="purpose"/>
+            Objectives <textarea class="form-control" rows="8" name="objectives"></textarea>
         </div>
         <input type="hidden" name="totalSpent" value="0"/>
         <input type="hidden" name="balance" value="0"/> 

@@ -1,5 +1,27 @@
 <div class="container-fluid">
     <br><br>
+    <div class="form-group row">
+        <div class="form-group col-sm-1" align="right">
+            <label for="staticName" class="col-form-label">Name: </label>
+        </div>
+         <div class="form-group col-sm-2">
+        <input readonly class="form-control-plaintext" id="staticName" value="{{user.username}}"/>
+        </div>
+        <div class="form-group col-sm-1" align="right">
+            <label for="staticDept" class="col-form-label">Department: </label>    
+        </div>
+        <div class="form-group col-sm-2">
+        <input readonly class="form-control-plaintext" id="staticDept" value="EXAMPLE"/>
+        </div>
+        <div class="form-group col-sm-1" align="right">
+            <label for="staticEmail" class="col-form-label">Email: </label>    
+        </div>
+        <div class="form-group col-sm-5">
+        <input readonly class="form-control-plaintext" id="staticEmail" value="verylongEXAMPLE@verylongexample.com"/>
+        </div>
+    </div>
+    
+
     <h5 class="alert alert-info"> Requisition# {{requisition.id}}</h5>
     <table class="table">
         <thead>
@@ -16,8 +38,54 @@
         </thead>
     </table>
     
+    
+        <h5 class="alert alert-info">Purpose: {{requisition.purpose}}</h5>
+    <form>
+        <div class="form-group row">
+           
+            <div class="form-group col-sm-2" align="right">
+                <label for="staticDepart" class="col-form-label">Departure Date: </label>
+            </div>
+            <div class="form-group col-sm-4" align="left">
+                <input readonly class="form-control-plaintext" id="staticDepart" value="{{requisition.departureDate}}"/>
+            </div>
+             <div class="form-group col-sm-2" align="right">
+                <label for="staticDestination" class="col-form-label">Destination: </label>
+            </div>
+            <div class="form-group col-sm-4" align="left">
+                <input readonly class="form-control-plaintext" id="staticDestination" value="{{requisition.destination}}"/>
+            </div>
+             
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-sm-2" align="right">
+                <label for="staticReturn" class="col-form-label">Return Date: </label>
+            </div>
+            <div class="form-group col-sm-4" align="left">
+                <input readonly class="form-control-plaintext" id="staticReturn" value="{{requisition.returnDate}}"/>
+            </div> 
+            <div class="form-group col-sm-2" align="right">
+                <label for="staticDestination" class="col-form-label">Departing From: </label>
+            </div>
+            <div class="form-group col-sm-4" align="left">
+                <input readonly class="form-control-plaintext" id="staticDestination" value="{{requisition.departLocation}}"/>
+            </div>
+           
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-sm-1" align="right">
+                <label for="staticObjectives" class="col-form-label">Objectives: </label>
+            </div>
+            <div class="form-group col-sm-10" align="center">
+                <textarea readonly class="form-control-plaintext" rows="8" id="staticObjectives">{{requisition.objectives}}</textarea>
+            </div>
+            <div class="form-group col-sm-1"></div> 
+        </div>
+    </form>
+        
+    <h5 class="alert alert-info">Expenses to Edit</h5>
     <form action="/updateExpenses" method="POST">
-        <h5 class="alert alert-info">Expense Report Draft</h5>
+        
         <div class="form-group row">
             
             <div class="form-group col-sm-2" align="center">
@@ -92,6 +160,6 @@
        
         {{!-- <button type="button" id="mealButton">Meals</button> --}}
     </form>
-    
+    <br><br><br><br>
 </div>
 {{!-- <script src="./expense.js"></script> --}}

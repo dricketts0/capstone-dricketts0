@@ -31,21 +31,29 @@ exports.addRequisition = (req, res) => {
 };
 
 exports.submitRequisition = async (req, res) => {
+  try {
   reqObj = {
     id: Number.parseInt(req.body.id),
     encumbered: Number.parseFloat(req.body.encumbered),
     balance: Number.parseFloat(req.body.balance),
     totalSpent: Number.parseFloat(req.body.totalSpent),
+    departureDate: req.body.departureDate,
+    returnDate: req.body.returnDate,
+    departLocation: req.body.departLocation,
+    destination: req.body.destination,
+    purpose: req.body.purpose,
+    objectives: req.body.objectives,
   };
 
   reqObj.balance = reqObj.encumbered - reqObj.totalSpent;
 
   reqObj.userId = req.user.id;
-
   await Requisition.upsert(reqObj);
-  
-
+ 
   res.redirect('/');
+} catch(error) {
+  console.log(error);
+}
 };
 
 exports.editRequisition = async (req, res) => {

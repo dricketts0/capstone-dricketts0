@@ -19,6 +19,12 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DECIMAL(10,2),
         defaultValue: 0.00
       },
+      departureDate: Sequelize.STRING,
+      returnDate: Sequelize.STRING,
+      departLocation: Sequelize.STRING,
+      destination: Sequelize.STRING,
+      purpose: Sequelize.STRING,
+      objectives: Sequelize.BLOB,
     },
     { freezeTableName: true },
   );

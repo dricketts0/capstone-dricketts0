@@ -12,12 +12,11 @@ module.exports = (sequelize, Sequelize) => {
       username: Sequelize.STRING,
       hash: Sequelize.TEXT,
       salt: Sequelize.TEXT,
-      // roleId: {
-      //     type: Sequelize.INTEGER,
-      //     defaultValue: 1
-      // }
-    },
-    { freezeTableName: true },
+      roleId: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
+    }, { freezeTableName: true },
   );
 
   passportLocalSequelize.attachToUser(User, {

@@ -12,7 +12,7 @@ exports.adminDash = async (req, res) => {
             }
         ],
         order: [['username', 'ASC']] }
-
+        //need teamId?
     );
     let roles = await Role.findAll();
     

@@ -14,9 +14,7 @@ exports.isLoggedIn = (req, res, next) => {
 };
 
 exports.registerPage = (req, res) => {
-  res.render('register-login', {
-    action: 'register',
-    buttonText: 'Register',
+  res.render('register', {
     flashes: req.flash('error'),
   });
 };
@@ -39,41 +37,20 @@ exports.registerUser = (req, res, next) => {
 };
 
 exports.loginPage = (req, res) => {
-  res.render('register-login', {
-    action: 'login',
-    buttonText: 'Login',
+  res.render('login-admin-user', {
     flashes: req.flash('error'),
   });
 };
 
 exports.loginUser = (req, res, next) => {
-  let redirect = req.session.redirectTo || '/';
-  // delete req.session.redirectTo;
-
-  passport.authenticate('local', {
-    successRedirect: redirect,
-    failureRedirect: '/login',
-    failureFlash: true,
-    successFlash: 'Welcome',
-  })(req, res, next);
-};
-
-exports.adminLogin = (req, res) => {
-  res.render('login-admin', { flashes: req.flash('error') });
-};
-
-exports.logAdmin = (req, res, next) => {
-
+  let failDirect = '/' || '/login'
   passport.authenticate('local', {
     successRedirect: '/admin',
-    failureRedirect: '/',
+    failureRedirect: failDirect,
     failureFlash: true,
     successFlash: 'Welcome',
   })(req, res, next);
 };
-
-// router.get('/logAdmin', authController.adminLogin);
-// router.post('/logAdmin', authController.logAdmin);
 
 exports.logoutUser = (req, res) => {
   req.logOut();

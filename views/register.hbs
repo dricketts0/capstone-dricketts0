@@ -1,11 +1,19 @@
-<form action="/logAdmin" method="post">
+
+<br>
+<h3>Welcome New User!</h3>
+<br><br>
+<form action="/register" method="post">
     Username: <input type="text" name="username"/>
     <br/>
     Password: <input type="password" name="password"/>
     <br/>
     <br/>
-    <button type="submit">Login</button>
+    <button type="submit">Register</button>
 </form>
+<br>
 {{#if flashes}}
 {{ flashes }}
 {{/if}}
+<br>
+
+<br><br>

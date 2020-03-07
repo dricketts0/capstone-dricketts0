@@ -9,13 +9,20 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      // firstName: Sequelize.STRING,
+      // lastName: Sequelize.STRING,
+      // email: Sequelize.STRING,
       username: Sequelize.STRING,
       hash: Sequelize.TEXT,
       salt: Sequelize.TEXT,
       roleId: {
         type: Sequelize.INTEGER,
-        defaultValue: 1,
+        defaultValue: 0,
       },
+      // teamId: {
+      //   type: Sequelize.INTEGER,
+      //   defaultValue: 0,
+      // },
     }, { freezeTableName: true },
   );
 

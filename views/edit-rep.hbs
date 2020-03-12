@@ -1,3 +1,24 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Team Expense!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/addReq">Add Expense Requisition</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 <div class="container-fluid">
     <br><br>
     <div class="form-group row">
@@ -5,19 +26,19 @@
             <label for="staticName" class="col-form-label">Name: </label>
         </div>
          <div class="form-group col-sm-2">
-        <input readonly class="form-control-plaintext" id="staticName" value="{{user.username}}"/>
+        <input readonly class="form-control-plaintext" id="staticName" value="{{user.firstName}} {{user.lastName}}"/>
         </div>
         <div class="form-group col-sm-1" align="right">
             <label for="staticDept" class="col-form-label">Department: </label>    
         </div>
         <div class="form-group col-sm-2">
-        <input readonly class="form-control-plaintext" id="staticDept" value="EXAMPLE"/>
+        <input readonly class="form-control-plaintext" id="staticDept" value="{{team.teamName}}"/>
         </div>
         <div class="form-group col-sm-1" align="right">
             <label for="staticEmail" class="col-form-label">Email: </label>    
         </div>
         <div class="form-group col-sm-5">
-        <input readonly class="form-control-plaintext" id="staticEmail" value="verylongEXAMPLE@verylongexample.com"/>
+        <input readonly class="form-control-plaintext" id="staticEmail" value="{{user.email}}"/>
         </div>
     </div>
     

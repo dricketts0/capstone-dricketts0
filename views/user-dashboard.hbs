@@ -1,70 +1,91 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Team Expense!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/addReq">Add Expense Requisition</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 {{#if flashes}}
 {{flashes.[0]}}
 {{/if}}
-<br>  
+<br><br>  
 <a href="/addReq" class="btn btn-info float-right">Add an Expense Requisition</a>
 <br><br>
 <h1>Requisitions for: {{user.[0].username}}</h1>
 <table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>Expense Req Number</th>
-            <th>Funds Encumbered</th>
-            <th>Total Spent</th>
-            <th>Remaining Balance</th>
-        </tr>
-    </thead>
-    {{#each requisition}}
+  <thead class="thead-dark">
     <tr>
-        <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
-        <td><a href="/addReport/{{this.id}}" class="btn btn-secondary" data-toggle="button">Add Expense Report</a></td>
-        <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
-        <td>{{this.id}}</td>
-        <td>$ {{this.encumbered}}</td>
-        <td>$ {{this.totalSpent}}</td>
-        <td>$ {{this.balance}}</td>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>Expense Req Number</th>
+      <th>Funds Encumbered</th>
+      <th>Total Spent</th>
+      <th>Remaining Balance</th>
+    </tr>
+  </thead>
+  {{#each requisition}}
+    <tr>
+      <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
+      <td><a href="/addReport/{{this.id}}" class="btn btn-secondary" data-toggle="button">Add Expense Report</a></td>
+      <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
+      <td>{{this.id}}</td>
+      <td>$ {{this.encumbered}}</td>
+      <td>$ {{this.totalSpent}}</td>
+      <td>$ {{this.balance}}</td>
    </tr>
-    {{/each}}
+  {{/each}}
 </table> 
-    <br><br>
+<br><br>
 <h1>Expense Reports for: {{user.[0].username}}</h1>
 <table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th></th>
-            <th></th>
-            <th class="align-middle">Requisition Number</th>
-            <th class="align-middle">Report Number</th>
-            <th class="align-middle">Total of Expenses</th>
-            <th class="align-middle">Airfare</th>
-            <th class="align-middle">Baggage</th>
-            <th class="align-middle">Lodging</th>
-            <th class="align-middle">Meals</th>
-            <th class="align-middle">Mileage</th>
-            <th class="align-middle">Car Rental</th>          
-            <th class="align-middle">Parking</th>
-            <th class="align-middle">Taxi</th>
-        </tr>
-    </thead>
-    {{#each report}}
+  <thead class="thead-dark">
     <tr>
-        <td><a href="/editReport/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
-        <td><a href="/deleteReport/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
-        <td>{{this.requisitionId}}</td>
-        <td>{{this.id}}</td>
-        <td>{{this.expenseTotal}}</td>
-        <td>{{this.airfare}}</td>
-        <td>{{this.baggage}}</td>
-        <td>{{this.lodging}}</td>
-        <td>{{this.meals}}</td>
-        <td>{{this.mileage}}</td>
-        <td>{{this.carRental}}</td>
-        <td>{{this.parking}}</td>
-        <td>{{this.taxi}}</td>
+      <th></th>
+      <th></th>
+      <th class="align-middle">Requisition Number</th>
+      <th class="align-middle">Report Number</th>
+      <th class="align-middle">Total of Expenses</th>
+      <th class="align-middle">Airfare</th>
+      <th class="align-middle">Baggage</th>
+      <th class="align-middle">Lodging</th>
+      <th class="align-middle">Meals</th>
+      <th class="align-middle">Mileage</th>
+      <th class="align-middle">Car Rental</th>          
+      <th class="align-middle">Parking</th>
+      <th class="align-middle">Taxi</th>
     </tr>
-    {{/each}}
+  </thead>
+  {{#each report}}
+    <tr>
+      <td><a href="/editReport/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
+      <td><a href="/deleteReport/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
+      <td>{{this.requisitionId}}</td>
+      <td>{{this.id}}</td>
+      <td>{{this.expenseTotal}}</td>
+      <td>{{this.airfare}}</td>
+      <td>{{this.baggage}}</td>
+      <td>{{this.lodging}}</td>
+      <td>{{this.meals}}</td>
+      <td>{{this.mileage}}</td>
+      <td>{{this.carRental}}</td>
+      <td>{{this.parking}}</td>
+      <td>{{this.taxi}}</td>
+    </tr>
+  {{/each}}
 </table>
   

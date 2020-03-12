@@ -1,10 +1,12 @@
 const Requisition = require('../db').Requisition;
 const Report = require('../db').Report;
+const Team = require('../db').Team;
 
 exports.addReport = async (req, res) => {
   let id = req.params.id;
   let requisition = await Requisition.findByPk(id);
-  res.render('add-rep', { requisition });
+  let team = await Team.findByPk(req.user.teamId);
+  res.render('add-rep', { requisition, team });
 };
 
 exports.calculateExpenses = async (req, res) => {
@@ -64,8 +66,9 @@ exports.editReport = async (req, res) => {
   let report = await Report.findByPk(id);
   let reqId = report.requisitionId;
   let requisition = await Requisition.findByPk(reqId);
+  let team = await Team.findByPk(req.user.teamId);
 
-  res.render('edit-rep', { report, requisition });
+  res.render('edit-rep', { report, requisition, team });
 };
 
 exports.updateExpenses = async (req, res) => {

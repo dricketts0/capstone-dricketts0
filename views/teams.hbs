@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Team Expense!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin">Dashboard<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">File Expenses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users">Users</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="/teams">Teams</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/supervisors">Supervisors</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br><br>
+<div class="container-fluid">
+  <a href="/addTeam" class="btn btn-info float-right">Add a New Team</a>
+  <br><br>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Id</th>
+        <th>Team</th>
+        <th>Budget</th>
+        <th>Total Spent</th>
+        <th>Remaining Balance</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+   {{#each team}}
+      <tr>
+        <td> {{this.id}} </td>
+        <td> {{this.teamCode}} - {{this.teamName}} </td>
+        <td> {{this.budget}}</td>
+        <td> {{this.totalSpent}}</td>
+        <td> {{this.balance}}</td>
+        <td><a href="/editTeam/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Edit</a></td>
+        <td><a href="/deleteTeam/{{this.id}}" class="btn btn-warning" data-toggle="button" aria-pressed="false">Delete</a>
+        </td>
+      </tr>  
+    {{/each}}
+  </table>
+</div>
+<br><br>

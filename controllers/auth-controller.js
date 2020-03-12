@@ -23,7 +23,7 @@ exports.registerUser = (req, res, next) => {
   let username = req.body.username;
   let password = req.body.password;
 
-  User.register(username, password, (error, registeredUser) => {
+  User.register(username, password, async (error, registeredUser) => {
     if (error) {
       console.log(error);
       res
@@ -31,6 +31,10 @@ exports.registerUser = (req, res, next) => {
         .send()
         .redirect('/login');
     }
+    registeredUser.firstName = req.body.firstName;
+    registeredUser.lastName = req.body.lastName;
+    registeredUser.email = req.body.email;
+    await registeredUser.save()
     req.flash('success', 'Welcome new user: ' + username);
     next();
   });

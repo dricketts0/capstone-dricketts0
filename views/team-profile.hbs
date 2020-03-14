@@ -1,0 +1,41 @@
+<table class="table table-striped">
+  <h4>Budget for {{team.teamCode}} - {{team.teamName}}</h4>
+  <thead class="thead-dark">
+    <tr>
+      <th>Funds Encumbered</th>
+      <th>Total Spent</th>
+      <th>Remaining Balance</th>
+    </tr>
+  </thead>
+    <tr>
+      <td>{{team.budget}}</td>
+      <td>{{team.totalSpent}}</td>
+      <td>{{team.balance}}</td>
+   </tr>
+</table> 
+<br><br>
+<h1>Members of {{team.teamCode}} - {{team.teamName}}</h1>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th></th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Assigned Budget</th>
+      <th>Total Spent</th>
+      <th>Remaining Balance</th>
+    </tr>
+  </thead>
+  {{#each teamUsers}}
+    <tr>
+      <td><a href="/editUser/{{this.id}}" class="btn btn-info" data-toggle="button">Edit Budget</a></td>
+      <td>{{this.id}}</td>
+      <td>{{this.firstName}} {{this.lastName}}</td>
+      <td>{{this.email}}</td>
+      <td>{{this.budget}}</td>
+      <td>{{this.totalSpent}}</td>
+      <td>{{this.balance}}</td>
+    </tr>
+  {{/each}}
+</table>

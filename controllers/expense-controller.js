@@ -17,9 +17,8 @@ exports.showDash = async (req, res) => {
     where: { userId: req.user.id },
     order: [['requisitionId', 'ASC']],
   });
-  let user = await User.findAll({ where: { id: req.user.id } });
+  
   res.render('user-dashboard', {
-    user,
     requisition,
     report,
     flashes: req.flash('success'),

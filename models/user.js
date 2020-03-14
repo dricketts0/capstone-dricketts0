@@ -15,6 +15,18 @@ module.exports = (sequelize, Sequelize) => {
       firstName: Sequelize.STRING,
       lastName: Sequelize.STRING,
       email: Sequelize.TEXT,
+      budget: {
+        type: Sequelize.DECIMAL(10,2),
+        defaultValue: 0.00
+      },
+      totalSpent: {
+        type: Sequelize.DECIMAL(10,2),
+        defaultValue: 0.00
+      },
+      balance: {
+        type: Sequelize.DECIMAL(10,2),
+        defaultValue: 0.00
+      },
       roleId: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
@@ -23,6 +35,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         defaultValue: 1,
         allowNull: true,
+      },
+      supervisorId: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
     }, { freezeTableName: true },
   );

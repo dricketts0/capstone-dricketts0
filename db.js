@@ -18,11 +18,11 @@ const Requisition = ReqModel(sequelize, Sequelize);
 // User.belongsToMany(Team, { through: 'TeamUser'});
 Team.hasMany(User);
 User.belongsTo(Team);
-Team.hasMany(Supervisor);
-Supervisor.belongsTo(Team);
+// Team.hasMany(Supervisor);
+// Supervisor.belongsTo(Team);
 
-User.hasMany(Supervisor);
-Supervisor.belongsTo(User);
+// User.hasMany(Supervisor);
+// Supervisor.belongsTo(User);
 User.hasMany(Report);
 Report.belongsTo(User);
 User.hasMany(Requisition);
@@ -30,8 +30,11 @@ Requisition.belongsTo(User);
 
 Requisition.hasMany(Report);
 Report.belongsTo(Requisition);
+
 Role.hasMany(User);
 User.belongsTo(Role);
+Supervisor.hasMany(User);
+User.belongsTo(Supervisor)
 
 sequelize
   .sync({ force: true })
@@ -41,8 +44,7 @@ sequelize
       [
         { id: 0, name: 'Blocked' },
         { id: 1, name: 'User' },
-        { id: 2, name: 'Supervisor'},
-        { id: 3, name: 'Admin' },
+        { id: 2, name: 'Admin' },
       ],
       { updateOnDuplicate: ['name'] },
     );
@@ -51,6 +53,15 @@ sequelize
     return Team.create(
       { teamCode: '0000', teamName: 'Need Assignment' }
     )
+  })
+  .then(() => {
+    return Supervisor.bulkCreate(
+      [
+        { id: 0, positionTitle: 'None'},
+        { id: 1, positionTitle: 'Supervisor'},
+      ], 
+      { updateOnDuplicate: ['positionTitle'] },
+    );
   })
 
 module.exports = {

@@ -34,6 +34,9 @@ exports.registerUser = (req, res, next) => {
     registeredUser.firstName = req.body.firstName;
     registeredUser.lastName = req.body.lastName;
     registeredUser.email = req.body.email;
+    registeredUser.budget;
+    registeredUser.totalSpent;
+    registeredUser.balance;
     await registeredUser.save()
     req.flash('success', 'Welcome new user: ' + username);
     next();

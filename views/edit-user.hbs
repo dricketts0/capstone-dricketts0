@@ -1,0 +1,120 @@
+<div class="container-fluid" width="100%">
+  <br><br>
+  <form action="/updateUser" method="POST" >
+
+  <div class="row" align="left">
+    <div class="form-group col-md-3">              
+  
+        <label for="staticFirstName">First Name </label>
+        <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticFirstName" name="firstName" value="{{aUser.firstName}} "/>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="staticLastName">Last Name </label>
+        <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text"  id="staticLastName" name="lastName" value="{{aUser.lastName}}"/>
+      </div>
+      <div class="form-group col-md-3">
+       <label for="staticDept">Department </label>
+      <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticDept" value="{{team.teamName}}"/>
+      </div>
+    
+   
+      
+      <div class="form-group col-md-3">   
+        <label for="staticEmail" class="col-form-label">Email </label>   
+        <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticEmail" name="email" value="{{aUser.email}}"/> 
+      </div> 
+     
+  </div>
+  
+    <br><br>
+            <div class="form-group" align="center">
+                <label for="budget" class="col-form-label mr-2"><h4>Assigned Budget</h4></label>    
+                <input class="mr-2"id="budget" name="budget" value="{{aUser.budget}}"/>
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit" class="btn btn-info btn-sm" align="left">Update</button>
+            </div>  
+        </div>
+    
+    </form>
+    <br><br>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>Current Budget</th>
+      <th>Total Spent</th>
+      <th>Remaining Balance</th>
+    </tr>
+  </thead>
+    <tr>
+      <td>{{aUser.budget}}</td>
+      <td>{{aUser.totalSpent}}</td>
+      <td>{{aUser.balance}}</td>
+    </tr>
+</table>
+<br><br><br>
+<h4>Requisitions for {{aUser.firstName}} {{aUser.lastName}}</h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>Expense Req Number</th>
+      <th>Funds Encumbered</th>
+      <th>Total Spent</th>
+      <th>Remaining Balance</th>
+    </tr>
+  </thead>
+  {{#each requisition}}
+    <tr>
+      <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
+      <td><a href="/addReport/{{this.id}}" class="btn btn-secondary" data-toggle="button">Add Expense Report</a></td>
+      <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
+      <td>{{this.id}}</td>
+      <td>$ {{this.encumbered}}</td>
+      <td>$ {{this.totalSpent}}</td>
+      <td>$ {{this.balance}}</td>
+   </tr>
+  {{/each}}
+</table> 
+<br><br><br>
+<h4>Expense Reports for {{aUser.firstName}} {{aUser.lastName}}</h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th></th>
+      <th></th>
+      <th class="align-middle">Requisition Number</th>
+      <th class="align-middle">Report Number</th>
+      <th class="align-middle">Total of Expenses</th>
+      <th class="align-middle">Airfare</th>
+      <th class="align-middle">Baggage</th>
+      <th class="align-middle">Lodging</th>
+      <th class="align-middle">Meals</th>
+      <th class="align-middle">Mileage</th>
+      <th class="align-middle">Car Rental</th>          
+      <th class="align-middle">Parking</th>
+      <th class="align-middle">Taxi</th>
+    </tr>
+  </thead>
+  {{#each report}}
+    <tr>
+      <td><a href="/editReport/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
+      <td><a href="/deleteReport/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
+      <td>{{this.requisitionId}}</td>
+      <td>{{this.id}}</td>
+      <td>{{this.expenseTotal}}</td>
+      <td>{{this.airfare}}</td>
+      <td>{{this.baggage}}</td>
+      <td>{{this.lodging}}</td>
+      <td>{{this.meals}}</td>
+      <td>{{this.mileage}}</td>
+      <td>{{this.carRental}}</td>
+      <td>{{this.parking}}</td>
+      <td>{{this.taxi}}</td>
+    </tr>
+  {{/each}}
+</table>
+    <br><br>
+</div>    

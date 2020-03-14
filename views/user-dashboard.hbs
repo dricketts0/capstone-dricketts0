@@ -13,6 +13,9 @@
         <a class="nav-link" href="/addReq">Add Expense Requisition</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="/teamProfile/{{user.teamId}}">Team Profile</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
     </ul>
@@ -25,7 +28,7 @@
 <br><br>  
 <a href="/addReq" class="btn btn-info float-right">Add an Expense Requisition</a>
 <br><br>
-<h1>Requisitions for: {{user.[0].username}}</h1>
+<h1>Requisitions for: {{user.username}}</h1>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
@@ -51,7 +54,7 @@
   {{/each}}
 </table> 
 <br><br>
-<h1>Expense Reports for: {{user.[0].username}}</h1>
+<h1>Expense Reports for: {{user.username}}</h1>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>

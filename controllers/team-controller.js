@@ -1,18 +1,25 @@
 const Team = require('../db').Team;
-const User = require('../db').User; 
+const User = require('../db').User;
 
 //admin only, add/edit/delete team
 
 // exports.addRelationship = (req, res) => {
-  // const { teamId, userId } = req.body;
-  // const team = await Team.findByPk(teamId);
-  // await team.addUser(userId);
-  // res.send(team);
+// const { teamId, userId } = req.body;
+// const team = await Team.findByPk(teamId);
+// await team.addUser(userId);
+// res.send(team);
 // };
 
 exports.listTeams = async (req, res) => {
-let team = await Team.findAll(); 
-res.render('teams', { team });
+  let team = await Team.findAll();
+  res.render('teams', { team });
+};
+
+exports.teamProfile = async (req, res) => {
+  let id = req.params.id;
+  let team = await Team.findByPk(id);
+  let teamUsers = await User.findAll( { where: { teamId: id } });
+  res.render('team-profile', { team, teamUsers })
 };
 
 exports.addTeam = async (req, res) => {
@@ -34,7 +41,7 @@ exports.submitTeam = async (req, res) => {
 exports.deleteTeam = async (req, res) => {
   let id = req.params.id;
   await Team.destroy({ where: { id } });
-  await User.update( { teamId: 1 }, { where: { teamId: null } });
-  
+  await User.update({ teamId: 1 }, { where: { teamId: null } });
+
   res.redirect('/teams');
-}; 
+};

@@ -45,7 +45,7 @@
    {{#each team}}
       <tr>
         <td> {{this.id}} </td>
-        <td> {{this.teamCode}} - {{this.teamName}} </td>
+        <td><a href="/teamProfile/{{this.id}}">{{this.teamCode}} - {{this.teamName}}</a></td>
         <td> {{this.budget}}</td>
         <td> {{this.totalSpent}}</td>
         <td> {{this.balance}}</td>

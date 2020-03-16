@@ -24,10 +24,10 @@
     <h2> 
             WE ARE EDITING THIS THING
         </h2>
-    <br><br>
+        <br><br>
     <form action="/submitReq"  method="POST">
         <div>
-            Funds Encumbered: $<input type="number" placeholder="0.00" step="0.01" name="encumbered" value="{{requisition.encumbered}}" />
+            Funds Encumbered: $<input type="number" placeholder="0.00" min="0" step="0.01" name="encumbered" value="{{requisition.encumbered}}" />
             <br>
         </div>
         <input type="hidden" name="id" value="{{requisition.id}}"/>

@@ -1,110 +1,63 @@
 const User = require('../db').User;
-const Role = require('../db').Role;
 const Team = require('../db').Team;
-const Supervisor = require('../db').Supervisor;
-
-exports.listUsers = async (req, res) => {
-  let users = await User.findAll({
-    include: [
-      {
-        model: Role,
-        as: 'role',
-        required: true,
-      },
-      {
-        model: Team,
-        as: 'team',
-        required: true,
-      },
-      {
-        model: Supervisor,
-        as: 'supervisor',
-        required: true,
-      },
-    ],
-    order: [
-      ['teamId', 'ASC'],
-      ['supervisorId', 'DESC'],
-      ['lastName', 'ASC'],
-    ],
-  });
-
-  let roles = await Role.findAll();
-  let teams = await Team.findAll();
-  let supervisors = await Supervisor.findAll();
-
-  users = users.map(user => {
-    user.roles = JSON.parse(JSON.stringify(roles));
-    user.roles = user.roles.map(role => {
-      if (role.id === user.roleId) {
-        role.selected = true;
-      }
-
-      return role;
-    });
-
-    user.teams = JSON.parse(JSON.stringify(teams));
-    user.teams = user.teams.map(team => {
-      if (team.id === user.teamId) {
-        team.selected = true;
-      }
-
-      return team;
-    });
-
-    user.supervisors = JSON.parse(JSON.stringify(supervisors));
-    user.supervisors = user.supervisors.map(supervisor => {
-      if (supervisor.id === user.supervisorId) {
-        supervisor.selected = true;
-      }
-
-      return supervisor;
-    });
-    return user;
-  });
-
-  res.render('users', { users, teams });
-};
-
-exports.updateUsers = async (req, res) => {
-  let body = req.body;
-
-  for (let i = 0; i < body.users.length; i++) {
-    let id = body.users[i].userId;
-    let roleId = body.users[i].roleId;
-    let teamId = body.users[i].teamId;
-    let supervisorId = body.users[i].supervisorId;
-    let user = await User.findByPk(id);
-
-    user.roleId = roleId;
-    user.teamId = teamId;
-    user.supervisorId = supervisorId;
-    await user.save();
-  }
-
-  res.redirect('/users');
-};
+const Requisition = require('../db').Requisition;
+const Report = require('../db').Report;
 
 exports.editUser = async (req, res) => {
-let id = req.params.id;
-let aUser = await User.findByPk(id);
-let team = await Team.findByPk(aUser.teamId);
+  let id = req.params.id;
+  let aUser = await User.findByPk(id);
+  let team = await Team.findByPk(aUser.teamId);
+  let requisitions = await Requisition.findAll( {
+    where: { userId: id },
+    order: [['id', 'DESC']],
+  });
+  let report = await Report.findAll({
+    where: { userId: id },
+    order: [['requisitionId', 'ASC']],
+  });
 
-res.render('edit-user', { isSupervisor: req.user.supervisorId === 1, team, aUser, id })
+  res.render('edit-user', {
+    isSupervisor: req.user.supervisorId === 1,
+    team,
+    aUser,
+    id,
+    requisitions,
+    report,
+    flashes: req.flash('error')
+  });
 };
 
 exports.updateUser = async (req, res) => {
   let body = req.body;
   let user = await User.findByPk(body.id);
- 
-  await User.upsert(req.body)
+  // let team = await Team.findByPk(user.teamId);
+
+  // let teamBudget = Number.parseFloat(team.budget);
+  // teamBudget -= Number.parseFloat(body.budget);
+
+  // let newTotal = Number.parseFloat(totalSpent);
+  // newTotal = newTotal + Number.parseFloat(expenses.expenseTotal);
+
+  // let newBalance = Number.parseFloat(balance);
+  // newBalance = Number.parseFloat(encumbered) - newTotal;
+
+  // if (teamBudget < 0) {
+  //   req.flash(
+  //     'error',
+  //     'Not enough funds in Team Budget to encumber for User Budget.'
+  //   );
+  //   res.redirect('/editUser/' + body.id);
+  // } else {
+    // await User.upsert(req.body);
+    user.firstName = body.firstName;
+    user.lastName = body.lastName;
+    user.email = body.email;
+    user.budget = body.budget;
+    user.balance = Number.parseFloat(user.budget) - Number.parseFloat(user.totalSpent);
+    await user.save()
+    // team.budget = teamBudget;
+    // await team.save();
+  // }
+
   res.redirect('/teamProfile/' + user.teamId);
 };
-
-// exports.addRelationship = (req, res) => {
-// const { teamId, userId } = req.body;
-// const team = await Team.findByPk(teamId);
-// await team.addUser(userId);
-// res.send(team);
-
-// };

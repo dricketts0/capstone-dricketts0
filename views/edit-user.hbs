@@ -28,26 +28,30 @@
   
     <br><br>
             <div class="form-group" align="center">
-                <label for="budget" class="col-form-label mr-2"><h4>Assigned Budget</h4></label>    
-                <input class="mr-2"id="budget" name="budget" value="{{aUser.budget}}"/>
+                <label for="budget" class="col-form-label mr-2"><h4>New Budget</h4></label>    
+                <input class="mr-2"id="budget" min="0" name="budget" value="{{aUser.budget}}"/>
                 <input type="hidden" name="id" value="{{id}}"/>
                 <button type="submit" class="btn btn-info btn-sm" align="left">Update</button>
             </div>  
         </div>
-    
     </form>
+{{#if flashes}}
+{{flashes.[0]}}
+{{/if}}
     <br><br>
 
 <table class="table">
   <thead class="thead-light">
     <tr>
       <th>Current Budget</th>
+      <th>Total Encumbered</th> 
       <th>Total Spent</th>
       <th>Remaining Balance</th>
     </tr>
   </thead>
     <tr>
       <td>{{aUser.budget}}</td>
+      <td>{{aUser.totalEncumbered}}</td>
       <td>{{aUser.totalSpent}}</td>
       <td>{{aUser.balance}}</td>
     </tr>
@@ -57,20 +61,18 @@
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      {{!-- <th></th>
+      <th></th> --}}
       <th>Expense Req Number</th>
       <th>Funds Encumbered</th>
       <th>Total Spent</th>
       <th>Remaining Balance</th>
     </tr>
   </thead>
-  {{#each requisition}}
+  {{#each requisitions}}
     <tr>
-      <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
-      <td><a href="/addReport/{{this.id}}" class="btn btn-secondary" data-toggle="button">Add Expense Report</a></td>
-      <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
+      {{!-- <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
+      <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a> --}}
       <td>{{this.id}}</td>
       <td>$ {{this.encumbered}}</td>
       <td>$ {{this.totalSpent}}</td>

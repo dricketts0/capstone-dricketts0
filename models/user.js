@@ -19,6 +19,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DECIMAL(10,2),
         defaultValue: 0.00
       },
+      totalEncumbered: {
+        type: Sequelize.DECIMAL(10,2),
+        defaultValue: 0.00
+      },
       totalSpent: {
         type: Sequelize.DECIMAL(10,2),
         defaultValue: 0.00

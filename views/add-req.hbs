@@ -20,14 +20,12 @@
 </nav>
 
 <div class="container-fluid">
-    <br><br>
-    <h2> 
-        Add Expense Requisition
-        </h2>
+  <br><br>
+    <h2>Add Expense Requisition</h2>
     <br><br>
     <form action="/submitReq" method="POST">
         <div>
-            Funds Encumbered $<input type="number" placeholder="0.00" step="0.01" name="encumbered"/>
+            Funds Encumbered $<input type="number" placeholder="0.00" min="0" step="0.01" name="encumbered"/>
             <br>
             Date of Departure <input type="text" placeholder="MM/DD/YYYY" maxlength="10" name="departureDate"/>
             <br>
@@ -37,7 +35,7 @@
             <br>
             Destination <input type="text" name="destination"/>
             <br>
-            Purpose of Event <input type="text" name="purpose"/>
+            Purpose of Expense <input type="text" name="purpose"/>
             Objectives <textarea class="form-control" rows="8" name="objectives"></textarea>
         </div>
         <input type="hidden" name="totalSpent" value="0"/>
@@ -45,4 +43,6 @@
         <br><br>
         <button type="submit">Submit</button>
     </form>
+    <br><br>
+
 </div>

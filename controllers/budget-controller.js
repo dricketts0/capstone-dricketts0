@@ -1,39 +1,20 @@
 const User = require('../db').User;
-const Budget = require('../db').Budget;
-const Team = require('../db').Team;
+const Requisition = require('../db').Requisition;
 
-// router.get('/addbudget', budgetController.addbudget);//authorizeRole([3]),
-// // router.post(
-//   '/submitbudget',
-//   authorizeRole([3]),
-//   budgetController.submitbudget,
-// );
-// router.get(
-//   '/editbudget/:id',
-//   authorizeRole([2, 3]),
-//   budgetController.editbudget,
-// ); //will change to [3] if create userbudget model
+exports.updateUserBudget = async (req, res) => {
+  let user = await User.findByPk(req.user.id);
+  let userReqs = await Requisition.findAll({ where: { userId: req.user.id } });
 
-exports.addBudget = async (req, res) => {
-  budgetId = req.params.id; 
-  let team = await Team.findAll();
-  res.render('add-edit-budget', { team, BudgetId});
-};
-
-exports.editBudget = async (req, res) => {
-  let id = req.params.id;
-  let budget = await Budget.findByPk(id);
-  res.render('add-edit-budget', { budget });
-}
-
-exports.submitBudget = async (req, res, next) => {
-  try {
-    console.log(req.body)
-    console.log(req.params.id)
-    // await Budget.upsert(req.body);
-    
-    res.redirect('/users');
-  } catch (error) {
-    console.log(error);
+  user.totalSpent = 0;
+  for (let requisition of userReqs) {
+    user.totalSpent =
+      Number.parseFloat(user.totalSpent) +
+      Number.parseFloat(requisition.totalSpent);
   }
+
+  user.balance =
+    Number.parseFloat(user.budget) - Number.parseFloat(user.totalSpent);
+
+  await user.save();
+  res.redirect('/');
 };

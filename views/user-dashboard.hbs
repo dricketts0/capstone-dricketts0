@@ -22,11 +22,33 @@
   </div>
 </nav>
 
-{{#if flashes}}
-{{flashes.[0]}}
+{{#if flashSuccess}}
+{{flashSuccess.[0]}}
+{{/if}}
+{{#if flashError}}
+{{flashError.[0]}}
 {{/if}}
 <br><br>  
 <a href="/addReq" class="btn btn-info float-right">Add an Expense Requisition</a>
+<br><br>  
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>Current Budget</th>
+      <th>Total Encumbered</th>
+      <th>Total Spent</th>
+      <th>Remaining Balance</th>
+    </tr>
+  </thead>
+    <tr>
+      <td>{{user.budget}}</td>
+      <td>{{user.totalEncumbered}}</td>
+      <td>{{user.totalSpent}}</td>
+      <td>{{user.balance}}</td>
+    </tr>
+</table>
+<br><br>
+
 <br><br>
 <h1>Requisitions for: {{user.username}}</h1>
 <table class="table table-striped">
@@ -38,7 +60,7 @@
       <th>Expense Req Number</th>
       <th>Funds Encumbered</th>
       <th>Total Spent</th>
-      <th>Remaining Balance</th>
+      <th>Balance of Requisition</th>
     </tr>
   </thead>
   {{#each requisition}}

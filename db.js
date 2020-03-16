@@ -14,15 +14,10 @@ const Supervisor = SupervisorModel(sequelize, Sequelize);
 const Report = ReportModel(sequelize, Sequelize);
 const Requisition = ReqModel(sequelize, Sequelize);
 
-// Team.belongsToMany(User, { through: 'TeamUser'});
-// User.belongsToMany(Team, { through: 'TeamUser'});
+
 Team.hasMany(User);
 User.belongsTo(Team);
-// Team.hasMany(Supervisor);
-// Supervisor.belongsTo(Team);
 
-// User.hasMany(Supervisor);
-// Supervisor.belongsTo(User);
 User.hasMany(Report);
 Report.belongsTo(User);
 User.hasMany(Requisition);

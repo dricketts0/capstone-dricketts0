@@ -6,10 +6,15 @@ exports.addReport = async (req, res) => {
   let id = req.params.id;
   let requisition = await Requisition.findByPk(id);
   let team = await Team.findByPk(req.user.teamId);
-  res.render('add-rep', { requisition, team });
+  res.render('add-edit-rep', {
+    requisition,
+    team,
+    flashes: req.flash('error'),
+  });
 };
 
-exports.calculateExpenses = async (req, res) => {
+exports.submitExpenses = async (req, res, next) => {
+  // ---- Prepping Expenses to Calculate Totals that will affect Budgets ---- //
   let expenses = {
     expenseTotal: req.body.expenseTotal,
     airfare: req.body.airfare,
@@ -22,6 +27,7 @@ exports.calculateExpenses = async (req, res) => {
     taxi: req.body.taxi,
   };
 
+  // ---- Calculating Total of Expenses of Report ---- //
   for (let [key, value] of Object.entries(expenses)) {
     if (value == '') {
       value = 0;
@@ -29,36 +35,42 @@ exports.calculateExpenses = async (req, res) => {
     expenses[key] = Number.parseFloat(value);
     expenses.expenseTotal += expenses[key];
   }
+
+  ///-- Assigning Id Numbers to Expenses Object --///
   expenses.requisitionId = req.body.requisitionId;
   expenses.userId = req.user.id;
 
+  // ---- Validating request to submit Expense Report and attach to Requisition  ---- //
   let requisition = await Requisition.findByPk(expenses.requisitionId);
-  let encumbered = await requisition.encumbered;
-  let totalSpent = await requisition.totalSpent;
-  let balance = await requisition.balance;
 
-  let newTotal = Number.parseFloat(totalSpent);
-  newTotal = newTotal + Number.parseFloat(expenses.expenseTotal);
+  if (req.body.id !== '') {
+    let prevReport = await Report.findByPk(req.body.id);
+    let prevExTotal = await prevReport.expenseTotal;
+    expenses.id = req.body.id;
 
-  let newBalance = Number.parseFloat(balance);
-  newBalance = Number.parseFloat(encumbered) - newTotal;
+    requisition.totalSpent = expenses.expenseTotal;
+    let expenseTotalDif =
+      Number.parseFloat(prevExTotal) - expenses.expenseTotal;
+    requisition.balance =
+      Number.parseFloat(requisition.balance) + expenseTotalDif;
+  } else {
+    requisition.totalSpent =
+      Number.parseFloat(requisition.totalSpent) +
+      Number.parseFloat(expenses.expenseTotal);
+    requisition.balance =
+      Number.parseFloat(requisition.encumbered) -
+      Number.parseFloat(requisition.totalSpent);
+  }
 
-  let updatedReqObj = {
-    id: expenses.requisitionId,
-    encumbered: encumbered,
-    totalSpent: newTotal,
-    balance: newBalance,
-    departureDate: req.body.departureDate,
-    returnDate: req.body.returnDate,
-    departLocation: req.body.departLocation,
-    destination: req.body.destination,
-    purpose: req.body.purpose,
-    objectives: req.body.objectives,
-  };
+  if (requisition.balance < 0) {
+    req.flash('error', 'Not enough funds in Requisition.');
+    res.redirect('/addReport/' + expenses.requisitionId);
+  } else {
+    await Report.upsert(expenses);
+    await requisition.save();
 
-  await Requisition.upsert(updatedReqObj);
-  await Report.upsert(expenses);
-  res.redirect('/');
+    next();
+  }
 };
 
 exports.editReport = async (req, res) => {
@@ -68,87 +80,29 @@ exports.editReport = async (req, res) => {
   let requisition = await Requisition.findByPk(reqId);
   let team = await Team.findByPk(req.user.teamId);
 
-  res.render('edit-rep', { report, requisition, team });
+  res.render('add-edit-rep', {
+    report,
+    requisition,
+    team,
+    flashes: req.flash('error'),
+  });
 };
 
-exports.updateExpenses = async (req, res) => {
-  let id = req.body.id;
-  let previousReport = await Report.findByPk(id);
-  let requisition = await Requisition.findByPk(req.body.requisitionId);
-  let encumbered = await requisition.encumbered;
-  let balance = await requisition.balance;
-
-  let previousExTotal = await previousReport.expenseTotal;
-
-  let newExpenses = {
-    expenseTotal: req.body.expenseTotal,
-    airfare: req.body.airfare,
-    baggage: req.body.baggage,
-    lodging: req.body.lodging,
-    mileage: req.body.mileage,
-    carRental: req.body.carRental,
-    meals: req.body.meals,
-    parking: req.body.parking,
-    taxi: req.body.taxi,
-  };
-
-  for (let [key, value] of Object.entries(newExpenses)) {
-    if (value == '') {
-      value = 0;
-    }
-    newExpenses[key] = Number.parseFloat(value);
-    newExpenses.expenseTotal += newExpenses[key];
-  };
-
-  expenseTotalDif = Number.parseFloat(previousExTotal) - newExpenses.expenseTotal;
-
-  balance = Number.parseFloat(balance) + expenseTotalDif;
-
-  newExpenses.requisitionId = req.body.requisitionId;
-  newExpenses.userId = req.user.id;
-  newExpenses.id = req.body.id;
-
-  let updatedReqObj = {
-    id: newExpenses.requisitionId,
-    encumbered: encumbered,
-    totalSpent: newExpenses.expenseTotal,
-    balance: balance,
-    departureDate: req.body.departureDate,
-    returnDate: req.body.returnDate,
-    departLocation: req.body.departLocation,
-    destination: req.body.destination,
-    purpose: req.body.purpose,
-    objectives: req.body.objectives,
-  };
-
-  await Requisition.upsert(updatedReqObj);
-  await Report.upsert(newExpenses);
-  res.redirect('/');
-};
-
-exports.deleteReport = async (req, res) => {
+exports.deleteReport = async (req, res, next) => {
   let id = req.params.id;
   let report = await Report.findByPk(id);
   let requisition = await Requisition.findByPk(report.requisitionId);
-  let encumbered = await requisition.encumbered;
-  let totalSpent = await requisition.totalSpent;
-  let balance = await requisition.balance;
 
-  let newTotal = Number.parseFloat(totalSpent);
-  newTotal = newTotal - Number.parseFloat(report.expenseTotal);
+  requisition.totalSpent =
+    Number.parseFloat(requisition.totalSpent) -
+    Number.parseFloat(report.expenseTotal);
 
-  let newBalance = Number.parseFloat(balance);
-  newBalance = Number.parseFloat(encumbered) - newTotal;
+  requisition.balance =
+    Number.parseFloat(requisition.encumbered) -
+    Number.parseFloat(requisition.totalSpent);
 
-  let updatedReqObj = {
-    id: report.requisitionId,
-    encumbered: encumbered,
-    totalSpent: newTotal,
-    balance: newBalance,
-  };
-
-  await Requisition.upsert(updatedReqObj);
-
+  await requisition.save();
   await Report.destroy({ where: { id } });
-  res.redirect('/');
+
+  next();
 };

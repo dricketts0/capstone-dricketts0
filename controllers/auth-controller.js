@@ -35,6 +35,7 @@ exports.registerUser = (req, res, next) => {
     registeredUser.lastName = req.body.lastName;
     registeredUser.email = req.body.email;
     registeredUser.budget;
+    registeredUser.totalEncumbered;
     registeredUser.totalSpent;
     registeredUser.balance;
     await registeredUser.save()

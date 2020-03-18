@@ -17,6 +17,8 @@ const Requisition = ReqModel(sequelize, Sequelize);
 
 Team.hasMany(User);
 User.belongsTo(Team);
+Team.hasMany(Requisition);
+Requisition.belongsTo(Team);
 
 User.hasMany(Report);
 Report.belongsTo(User);

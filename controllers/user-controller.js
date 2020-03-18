@@ -7,7 +7,7 @@ exports.editUser = async (req, res) => {
   let id = req.params.id;
   let aUser = await User.findByPk(id);
   let team = await Team.findByPk(aUser.teamId);
-  let requisitions = await Requisition.findAll( {
+  let requisitions = await Requisition.findAll({
     where: { userId: id },
     order: [['id', 'DESC']],
   });
@@ -23,41 +23,48 @@ exports.editUser = async (req, res) => {
     id,
     requisitions,
     report,
-    flashes: req.flash('error')
+    flashes: req.flash('error'),
   });
 };
 
 exports.updateUser = async (req, res) => {
   let body = req.body;
   let user = await User.findByPk(body.id);
-  // let team = await Team.findByPk(user.teamId);
+    
+  if (Number.parseFloat(body.budget) < Number.parseFloat(user.totalEncumbered)) {
+    req.flash(
+      'error',
+      'Cannot comply. User has encumbered more funds than intended budget.',
+    );
+    res.redirect('/teamProfile/' + user.teamId);
+  } else {
+    let team = await Team.findByPk(user.teamId);
 
-  // let teamBudget = Number.parseFloat(team.budget);
-  // teamBudget -= Number.parseFloat(body.budget);
+    let budgetDif =
+      Number.parseFloat(body.budget) - Number.parseFloat(user.budget);
 
-  // let newTotal = Number.parseFloat(totalSpent);
-  // newTotal = newTotal + Number.parseFloat(expenses.expenseTotal);
+    team.totalAllocated = Number.parseFloat(team.totalAllocated) + budgetDif;
 
-  // let newBalance = Number.parseFloat(balance);
-  // newBalance = Number.parseFloat(encumbered) - newTotal;
+    team.balance =
+      Number.parseFloat(team.budget) - Number.parseFloat(team.totalAllocated);
 
-  // if (teamBudget < 0) {
-  //   req.flash(
-  //     'error',
-  //     'Not enough funds in Team Budget to encumber for User Budget.'
-  //   );
-  //   res.redirect('/editUser/' + body.id);
-  // } else {
-    // await User.upsert(req.body);
-    user.firstName = body.firstName;
-    user.lastName = body.lastName;
-    user.email = body.email;
-    user.budget = body.budget;
-    user.balance = Number.parseFloat(user.budget) - Number.parseFloat(user.totalSpent);
-    await user.save()
-    // team.budget = teamBudget;
-    // await team.save();
-  // }
-
-  res.redirect('/teamProfile/' + user.teamId);
+    if (team.balance < 0) {
+      req.flash(
+        'error',
+        'Not enough funds in Team Budget to allocate for User Budget.',
+      );
+      res.redirect('/editUser/' + body.id);
+    } else {
+      
+      user.firstName = body.firstName;
+      user.lastName = body.lastName;
+      user.email = body.email;
+      user.budget = body.budget;
+      user.balance =
+        Number.parseFloat(user.budget) - Number.parseFloat(user.totalSpent);
+      await user.save();
+      res.redirect('/teamProfile/' + user.teamId);
+      await team.save();
+    }
+  }
 };

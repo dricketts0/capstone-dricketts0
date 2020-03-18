@@ -69,7 +69,7 @@ exports.listUsers = async (req, res) => {
     return user;
   });
 
-  res.render('users', { users, teams });
+  res.render('users', { users, teams, flashSuccess: req.flash('success'), });
 };
 
 exports.updateUsers = async (req, res) => {
@@ -87,6 +87,7 @@ exports.updateUsers = async (req, res) => {
     user.supervisorId = supervisorId;
     await user.save();
   }
-
+  
+  req.flash('success', 'Successfully updated User(s).')
   res.redirect('/users');
 };

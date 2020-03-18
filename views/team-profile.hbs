@@ -1,14 +1,20 @@
 <table class="table table-striped">
+  
+{{#if flashes}}
+{{ flashes }}
+{{/if}}
   <h4>Budget for {{team.teamCode}} - {{team.teamName}}</h4>
   <thead class="thead-dark">
     <tr>
-      <th>Assigned Budget</th>
-      <th>Total Spent</th>
-      <th>Remaining Balance</th>
+      <th>Team Budget</th>
+      <th>Total Allocated</th>
+      <th>Total Expenses</th>
+      <th>Team Balance</th>
     </tr>
   </thead>
     <tr>
       <td>{{team.budget}}</td>
+      <td>{{team.totalAllocated}}</td>
       <td>{{team.totalSpent}}</td>
       <td>{{team.balance}}</td>
    </tr>
@@ -23,8 +29,9 @@
       <th>Name</th>
       <th>Email</th>
       <th>User Budget</th>
+      <th>Total Encumbered</th>
       <th>Total Spent</th>
-      <th>Remaining Balance</th>
+      <th>User Balance</th>
     </tr>
   </thead>
   {{#each teamUsers}}
@@ -34,6 +41,7 @@
       <td>{{this.firstName}} {{this.lastName}}</td>
       <td>{{this.email}}</td>
       <td>{{this.budget}}</td>
+      <td>{{this.totalEncumbered}}</td>
       <td>{{this.totalSpent}}</td>
       <td>{{this.balance}}</td>
     </tr>

@@ -36,6 +36,7 @@
         <th>Id</th>
         <th>Team</th>
         <th>Budget</th>
+        <th>Total of Allocated Budgets</th>
         <th>Total Spent</th>
         <th>Remaining Balance</th>
         <th></th>
@@ -47,7 +48,8 @@
         <td> {{this.id}} </td>
         <td><a href="/teamProfile/{{this.id}}">{{this.teamCode}} - {{this.teamName}}</a></td>
         <td> {{this.budget}}</td>
-        <td> {{this.totalSpent}}</td>
+        <td> {{this.totalAllocated}}</td>
+        <td>{{this.totalSpent}}</td>
         <td> {{this.balance}}</td>
         <td><a href="/editTeam/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Edit</a></td>
         <td><a href="/deleteTeam/{{this.id}}" class="btn btn-warning" data-toggle="button" aria-pressed="false">Delete</a>

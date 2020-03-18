@@ -21,68 +21,72 @@ exports.showDash = async (req, res) => {
 };
 
 exports.addRequisition = (req, res) => {
-  res.render('add-req', { flashes: req.flash('error') });
+  res.render('add-edit-req', { flashes: req.flash('error') });
 };
 
 exports.submitRequisition = async (req, res) => {
-  let user = await User.findByPk(req.user.id);
-  let userBudget = Number.parseFloat(user.budget);
-  let userBalance = Number.parseFloat(user.balance);
-
-  reqObj = {
-    id: Number.parseInt(req.body.id),
-    encumbered: Number.parseFloat(req.body.encumbered),
-    balance: Number.parseFloat(req.body.balance),
-    totalSpent: Number.parseFloat(req.body.totalSpent),
-    departureDate: req.body.departureDate,
-    returnDate: req.body.returnDate,
-    departLocation: req.body.departLocation,
-    destination: req.body.destination,
-    purpose: req.body.purpose,
-    objectives: req.body.objectives,
-  };
-
-  reqObj.balance = reqObj.encumbered - reqObj.totalSpent;
-
-  let userReqs = await Requisition.findAll({ where: { userId: req.user.id } });
-  totalEncumbered = 0;
-  for (let requisition of userReqs) {
-    totalEncumbered =
-      Number.parseFloat(totalEncumbered) +
-      Number.parseFloat(requisition.encumbered);
-  }
-  totalEncumbered = totalEncumbered + reqObj.encumbered;
-  console.log(
-    '\n Total Encumbered when submitting Requisition: ' +
-      totalEncumbered +
-      '\n',
-  );
-  user.totalEncumbered = totalEncumbered;
-  userBalance = userBudget - totalEncumbered;
-
-  // expenseTotalDif =
-  //   Number.parseFloat(previousExTotal) - newExpenses.expenseTotal;
-
-  // balance = Number.parseFloat(balance) + expenseTotalDif;
-  if (userBalance < 0) {
-    req.flash(
-      'error',
-      'Not enough funds to encumber. Please contact your Team Supervisor.',
-    );
+  if (req.body.encumbered < req.body.totalSpent) {
+    req.flash('error', 'Cannot Encumber less than what is spent.');
     res.redirect('/');
   } else {
-    reqObj.userId = req.user.id;
-    await Requisition.upsert(reqObj);
-    await user.save();
+    let user = await User.findByPk(req.user.id);
+    let budgetCheck = Number.parseFloat(user.budget);
+    let balanceCheck = Number.parseFloat(user.balance);
 
-    res.redirect('/');
+    reqObj = {
+      encumbered: Number.parseFloat(req.body.encumbered),
+      totalSpent: Number.parseFloat(req.body.totalSpent),
+      departureDate: req.body.departureDate,
+      returnDate: req.body.returnDate,
+      departLocation: req.body.departLocation,
+      destination: req.body.destination,
+      purpose: req.body.purpose,
+      objectives: req.body.objectives,
+    };
+
+    if (req.body.encumbered == '') {
+      reqObj.encumbered = 0;
+    }
+
+    if (req.body.totalSpent == '') {
+      reqObj.totalSpent = 0;
+      reqObj.balance = reqObj.encumbered - reqObj.totalSpent;
+      user.totalEncumbered =
+        Number.parseFloat(user.totalEncumbered) + reqObj.encumbered;
+    } else if (req.body.id !== '') {
+      let id = req.body.id;
+      let prevReq = await Requisition.findByPk(id);
+      reqObj.id = id;
+
+      let encumbDif = Number.parseFloat(prevReq.encumbered) - reqObj.encumbered;
+      reqObj.balance = Number.parseFloat(req.body.balance) - encumbDif;
+      user.totalEncumbered =
+        Number.parseFloat(user.totalEncumbered) - encumbDif;
+    }
+
+    balanceCheck = budgetCheck - Number.parseFloat(user.totalEncumbered);
+
+    if (balanceCheck < 0) {
+      req.flash(
+        'error',
+        'Not enough funds to encumber. Please contact your Team Supervisor.',
+      );
+      res.redirect('/');
+    } else {
+      reqObj.userId = req.user.id;
+      reqObj.teamId = req.user.teamId;
+      await Requisition.upsert(reqObj);
+      await user.save();
+
+      res.redirect('/');
+    }
   }
 };
 
 exports.editRequisition = async (req, res) => {
   let id = req.params.id;
   let requisition = await Requisition.findByPk(id);
-  res.render('edit-req', { requisition });
+  res.render('add-edit-req', { requisition });
 };
 
 exports.deleteRequisition = async (req, res, next) => {

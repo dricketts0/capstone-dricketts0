@@ -1,6 +1,7 @@
 const Requisition = require('../db').Requisition;
 const Report = require('../db').Report;
 const Team = require('../db').Team;
+const User = require('../db').User;
 
 exports.addReport = async (req, res) => {
   let id = req.params.id;
@@ -45,14 +46,25 @@ exports.submitExpenses = async (req, res, next) => {
 
   if (req.body.id !== '') {
     let prevReport = await Report.findByPk(req.body.id);
+    let allReports = await Report.findAll({
+      where: { requisitionId: expenses.requisitionId },
+    });
     let prevExTotal = await prevReport.expenseTotal;
     expenses.id = req.body.id;
 
-    requisition.totalSpent = expenses.expenseTotal;
+    console.log(requisition.totalSpent);
+
     let expenseTotalDif =
-      Number.parseFloat(prevExTotal) - expenses.expenseTotal;
+      Number.parseFloat(expenses.expenseTotal) - Number.parseFloat(prevExTotal);
+    requisition.totalSpent = expenseTotalDif;
+
+    for (let report of allReports) {
+      requisition.totalSpent =
+        Number.parseFloat(requisition.totalSpent) +
+        Number.parseFloat(report.expenseTotal);
+    }
     requisition.balance =
-      Number.parseFloat(requisition.balance) + expenseTotalDif;
+      Number.parseFloat(requisition.encumbered) - requisition.totalSpent;
   } else {
     requisition.totalSpent =
       Number.parseFloat(requisition.totalSpent) +
@@ -92,15 +104,21 @@ exports.deleteReport = async (req, res, next) => {
   let id = req.params.id;
   let report = await Report.findByPk(id);
   let requisition = await Requisition.findByPk(report.requisitionId);
+  let user = await User.findByPk(report.userId);
+  let team = await Team.findByPk(user.teamId);
 
   requisition.totalSpent =
     Number.parseFloat(requisition.totalSpent) -
     Number.parseFloat(report.expenseTotal);
 
+  team.totalSpent =
+    Number.parseFloat(team.totalSpent) - Number.parseFloat(report.expenseTotal);
+
   requisition.balance =
     Number.parseFloat(requisition.encumbered) -
     Number.parseFloat(requisition.totalSpent);
 
+  await team.save();
   await requisition.save();
   await Report.destroy({ where: { id } });
 

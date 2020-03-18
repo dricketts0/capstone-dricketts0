@@ -1,15 +1,6 @@
 const Team = require('../db').Team;
 const User = require('../db').User;
 
-//admin only, add/edit/delete team
-
-// exports.addRelationship = (req, res) => {
-// const { teamId, userId } = req.body;
-// const team = await Team.findByPk(teamId);
-// await team.addUser(userId);
-// res.send(team);
-// };
-
 exports.listTeams = async (req, res) => {
   let team = await Team.findAll();
   res.render('teams', { team });
@@ -19,7 +10,7 @@ exports.teamProfile = async (req, res) => {
   let id = req.params.id;
   let team = await Team.findByPk(id);
   let teamUsers = await User.findAll( { where: { teamId: id } });
-  res.render('team-profile', { team, teamUsers })
+  res.render('team-profile', { team, teamUsers, flashes: req.flash('error') });
 };
 
 exports.addTeam = async (req, res) => {

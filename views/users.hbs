@@ -16,16 +16,15 @@
       </li> <li class="nav-item">
         <a class="nav-link" href="/teams">Teams</a>
       </li>
-      {{!-- <li class="nav-item">
-        <a class="nav-link" href="/supervisors">Supervisors</a>
-      </li> --}}
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
     </ul>
   </div>
 </nav>
-
+{{#if flashSuccess}}
+{{flashSuccess.[0]}}
+{{/if}}
 <h1>LIST of USERS</h1>
 <br>
 <br>

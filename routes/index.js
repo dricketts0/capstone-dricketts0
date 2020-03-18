@@ -18,12 +18,12 @@ router.get('/', expenseController.showDash);
 router.get('/addReq', expenseController.addRequisition);
 router.post('/submitReq', expenseController.submitRequisition);
 router.get('/editReq/:id', expenseController.editRequisition);
-router.get('/deleteReq/:id', expenseController.deleteRequisition, budgetController.updateUserBudget);
+router.get('/deleteReq/:id', expenseController.deleteRequisition, budgetController.updateBudgets);
 
 router.get('/addReport/:id', reportController.addReport);
-router.post('/submitExpenses', reportController.submitExpenses, budgetController.updateUserBudget);
+router.post('/submitExpenses', reportController.submitExpenses, budgetController.updateBudgets);
 router.get('/editReport/:id', reportController.editReport);
-router.get('/deleteReport/:id', reportController.deleteReport, budgetController.updateUserBudget);
+router.get('/deleteReport/:id', reportController.deleteReport, budgetController.updateBudgets);
 
 //router.use(adminController.isAdmin)
 router.get('/admin', adminController.adminDash);//authorizeRole([3])

@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/">Team Expense!</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -5,28 +6,36 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="/admin">Dashboard<span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" href="/">File Expenses</a>
       </li>
-       <li class="nav-item">
+      {{#if isAdmin}}
+      <li class="nav-item">
         <a class="nav-link" href="/users">Users</a>
-      </li> <li class="nav-item">
+      </li>
+      {{/if}}
+      {{#if isAdmin}} 
+      <li class="nav-item">
         <a class="nav-link" href="/teams">Teams</a>
       </li>
+      {{/if}}
+      {{#if isSupervisor}}
+      <li class="nav-item">
+        <a class="nav-link" href="/teamProfile/{{user.teamId}}">Team Profile</a>
+      </li>
+      {{/if}}
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
     </ul>
   </div>
 </nav>
-{{#if flashSuccess}}
-{{flashSuccess.[0]}}
-{{/if}}
+<br><br>
 <h1>LIST of USERS</h1>
 <br>
+{{#if flashSuccess}}
+<h6 class="alert alert-success">{{flashSuccess.[0]}}</h6>
+{{/if}}
 <br>
 <form action="/updateUsers" method ="post">
 <button class="btn btn-info" type="submit">Submit</button>

@@ -3,11 +3,14 @@ const Role = require('../db').Role;
 const Team = require('../db').Team;
 const Supervisor = require('../db').Supervisor;
 
-
 exports.adminDash = async (req, res) => {
-    let users = await User.findAll();
-    res.render('admin', {users});
-}
+  let users = await User.findAll();
+  res.render('admin', {
+    users,
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
+  });
+};
 
 exports.listUsers = async (req, res) => {
   let users = await User.findAll({
@@ -69,7 +72,13 @@ exports.listUsers = async (req, res) => {
     return user;
   });
 
-  res.render('users', { users, teams, flashSuccess: req.flash('success'), });
+  res.render('users', {
+    users,
+    teams,
+    flashSuccess: req.flash('success'),
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
+  });
 };
 
 exports.updateUsers = async (req, res) => {
@@ -87,7 +96,7 @@ exports.updateUsers = async (req, res) => {
     user.supervisorId = supervisorId;
     await user.save();
   }
-  
-  req.flash('success', 'Successfully updated User(s).')
+
+  req.flash('success', 'Successfully updated User(s).');
   res.redirect('/users');
 };

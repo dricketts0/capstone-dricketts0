@@ -8,16 +8,16 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
       },
       encumbered: {
-        type: Sequelize.DECIMAL(10,2),
-        defaultValue: 0.00
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: 0.0,
       },
       totalSpent: {
-        type: Sequelize.DECIMAL(10,2),
-        defaultValue: 0.00
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: 0.0,
       },
       balance: {
-        type: Sequelize.DECIMAL(10,2),
-        defaultValue: 0.00
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: 0.0,
       },
       departureDate: Sequelize.STRING,
       returnDate: Sequelize.STRING,

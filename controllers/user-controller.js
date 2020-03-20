@@ -24,14 +24,18 @@ exports.editUser = async (req, res) => {
     requisitions,
     report,
     flashes: req.flash('error'),
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
   });
 };
 
 exports.updateUser = async (req, res) => {
   let body = req.body;
   let user = await User.findByPk(body.id);
-    
-  if (Number.parseFloat(body.budget) < Number.parseFloat(user.totalEncumbered)) {
+
+  if (
+    Number.parseFloat(body.budget) < Number.parseFloat(user.totalEncumbered)
+  ) {
     req.flash(
       'error',
       'Cannot comply. User has encumbered more funds than intended budget.',
@@ -55,7 +59,6 @@ exports.updateUser = async (req, res) => {
       );
       res.redirect('/editUser/' + body.id);
     } else {
-      
       user.firstName = body.firstName;
       user.lastName = body.lastName;
       user.email = body.email;

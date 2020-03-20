@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const TeamModel = require('./models/team');
 const UserModel = require('./models/user');
 const RoleModel = require('./models/role');
-const SupervisorModel = require('./models/supervisor')
+const SupervisorModel = require('./models/supervisor');
 const ReportModel = require('./models/expense-report');
 const ReqModel = require('./models/expense-req');
 const sequelize = new Sequelize(process.env.DATABASE_URL);
@@ -13,7 +13,6 @@ const Role = RoleModel(sequelize, Sequelize);
 const Supervisor = SupervisorModel(sequelize, Sequelize);
 const Report = ReportModel(sequelize, Sequelize);
 const Requisition = ReqModel(sequelize, Sequelize);
-
 
 Team.hasMany(User);
 User.belongsTo(Team);
@@ -31,10 +30,10 @@ Report.belongsTo(Requisition);
 Role.hasMany(User);
 User.belongsTo(Role);
 Supervisor.hasMany(User);
-User.belongsTo(Supervisor)
+User.belongsTo(Supervisor);
 
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => console.log('\nTables are created.\n'))
   .then(() => {
     return Role.bulkCreate(
@@ -47,19 +46,20 @@ sequelize
     );
   })
   .then(() => {
-    return Team.create(
-      { teamCode: '0000', teamName: 'Need Assignment' }
-    )
+    return Team.bulkCreate(
+      [{ id: 1, teamCode: '0000', teamName: 'Need Assignment' }],
+      { updateOnDuplicate: ['teamName'] },
+    );
   })
   .then(() => {
     return Supervisor.bulkCreate(
       [
-        { id: 0, positionTitle: 'None'},
-        { id: 1, positionTitle: 'Supervisor'},
-      ], 
+        { id: 0, positionTitle: 'None' },
+        { id: 1, positionTitle: 'Supervisor' },
+      ],
       { updateOnDuplicate: ['positionTitle'] },
     );
-  })
+  });
 
 module.exports = {
   User,

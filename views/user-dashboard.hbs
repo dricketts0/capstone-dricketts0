@@ -6,29 +6,40 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item">
-        <a class="nav-link" href="/addReq">Add Expense Requisition</a>
+        <a class="nav-link" href="/">File Expenses</a>
       </li>
+      {{#if isAdmin}}
+      <li class="nav-item">
+        <a class="nav-link" href="/users">Users</a>
+      </li>
+      {{/if}}
+      {{#if isAdmin}} 
+      <li class="nav-item">
+        <a class="nav-link" href="/teams">Teams</a>
+      </li>
+      {{/if}}
+      {{#if isSupervisor}}
       <li class="nav-item">
         <a class="nav-link" href="/teamProfile/{{user.teamId}}">Team Profile</a>
       </li>
+      {{/if}}
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
     </ul>
   </div>
 </nav>
-
+<br><br> 
+<h1>USER DASHBOARD: {{user.firstName}} {{user.lastName}}</h1>
+<br>
 {{#if flashSuccess}}
-{{flashSuccess.[0]}}
+<h6 class="alert alert-success">{{flashSuccess.[0]}}</h6>
 {{/if}}
 {{#if flashError}}
 {{flashError.[0]}}
 {{/if}}
-<br><br>  
+<br>  
 <a href="/addReq" class="btn btn-info float-right">Add an Expense Requisition</a>
 <br><br>  
 <table class="table">
@@ -50,7 +61,7 @@
 <br><br>
 
 <br><br>
-<h1>Requisitions for: {{user.username}}</h1>
+<h2>Requisitions</h2>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
@@ -69,14 +80,14 @@
       <td><a href="/addReport/{{this.id}}" class="btn btn-secondary" data-toggle="button">Add Expense Report</a></td>
       <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
       <td>{{this.id}}</td>
-      <td>$ {{this.encumbered}}</td>
-      <td>$ {{this.totalSpent}}</td>
-      <td>$ {{this.balance}}</td>
+      <td>{{this.encumbered}}</td>
+      <td>{{this.totalSpent}}</td>
+      <td>{{this.balance}}</td>
    </tr>
   {{/each}}
 </table> 
 <br><br>
-<h1>Expense Reports for: {{user.username}}</h1>
+<h2>Expense Reports</h2>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>

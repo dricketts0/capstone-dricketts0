@@ -1,10 +1,47 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Team Expense!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">File Expenses</a>
+      </li>
+      {{#if isAdmin}}
+      <li class="nav-item">
+        <a class="nav-link" href="/users">Users</a>
+      </li>
+      {{/if}}
+      {{#if isAdmin}} 
+      <li class="nav-item">
+        <a class="nav-link" href="/teams">Teams</a>
+      </li>
+      {{/if}}
+      {{#if isSupervisor}}
+      <li class="nav-item">
+        <a class="nav-link" href="/teamProfile/{{user.teamId}}">Team Profile</a>
+      </li>
+      {{/if}}
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br><br> 
+<h1>USER PROFILE</h1>
+<br>
+{{#if flashes}}
+<h6 class="alert alert-warning">{{flashes.[0]}}</h6>
+{{/if}}
+<br>
 <div class="container-fluid" width="100%">
   <br><br>
   <form action="/updateUser" method="POST" >
-
   <div class="row" align="left">
     <div class="form-group col-md-3">              
-  
         <label for="staticFirstName">First Name </label>
         <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticFirstName" name="firstName" value="{{aUser.firstName}} "/>
       </div>
@@ -16,14 +53,10 @@
        <label for="staticDept">Department </label>
       <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticDept" value="{{team.teamName}}"/>
       </div>
-    
-   
-      
       <div class="form-group col-md-3">   
         <label for="staticEmail" class="col-form-label">Email </label>   
         <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticEmail" name="email" value="{{aUser.email}}"/> 
-      </div> 
-     
+      </div>    
   </div>
   
     <br><br>
@@ -33,14 +66,11 @@
                 <input type="hidden" name="id" value="{{id}}"/>
                 <button type="submit" class="btn btn-info btn-sm" align="left">Update</button>
             </div>  
-        </div>
+        
     </form>
-{{#if flashes}}
-{{flashes.[0]}}
-{{/if}}
     <br><br>
 
-<table class="table">
+  <table class="table">
   <thead class="thead-light">
     <tr>
       <th>Current Budget</th>
@@ -55,10 +85,10 @@
       <td>{{aUser.totalSpent}}</td>
       <td>{{aUser.balance}}</td>
     </tr>
-</table>
-<br><br><br>
-<h4>Requisitions for {{aUser.firstName}} {{aUser.lastName}}</h4>
-<table class="table table-striped">
+  </table>
+  <br><br><br>
+  <h4>Requisitions for {{aUser.firstName}} {{aUser.lastName}}</h4>
+  <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
       {{!-- <th></th>
@@ -79,10 +109,10 @@
       <td>$ {{this.balance}}</td>
    </tr>
   {{/each}}
-</table> 
-<br><br><br>
-<h4>Expense Reports for {{aUser.firstName}} {{aUser.lastName}}</h4>
-<table class="table table-striped">
+  </table> 
+  <br><br><br>
+  <h4>Expense Reports for {{aUser.firstName}} {{aUser.lastName}}</h4>
+  <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
       <th></th>
@@ -117,6 +147,6 @@
       <td>{{this.taxi}}</td>
     </tr>
   {{/each}}
-</table>
-    <br><br>
+  </table>
+  <br><br>
 </div>    

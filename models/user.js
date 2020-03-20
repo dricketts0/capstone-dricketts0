@@ -16,20 +16,20 @@ module.exports = (sequelize, Sequelize) => {
       lastName: Sequelize.STRING,
       email: Sequelize.TEXT,
       budget: {
-        type: Sequelize.DECIMAL(10,2),
-        defaultValue: 0.00
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: 0.0,
       },
       totalEncumbered: {
-        type: Sequelize.DECIMAL(10,2),
-        defaultValue: 0.00
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: 0.0,
       },
       totalSpent: {
-        type: Sequelize.DECIMAL(10,2),
-        defaultValue: 0.00
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: 0.0,
       },
       balance: {
-        type: Sequelize.DECIMAL(10,2),
-        defaultValue: 0.00
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: 0.0,
       },
       roleId: {
         type: Sequelize.INTEGER,
@@ -44,7 +44,8 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
-    }, { freezeTableName: true },
+    },
+    { freezeTableName: true },
   );
 
   passportLocalSequelize.attachToUser(User, {

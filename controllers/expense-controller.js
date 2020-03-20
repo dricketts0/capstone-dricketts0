@@ -13,6 +13,8 @@ exports.showDash = async (req, res) => {
   });
 
   res.render('user-dashboard', {
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
     requisition,
     report,
     flashSuccess: req.flash('success'),
@@ -21,7 +23,11 @@ exports.showDash = async (req, res) => {
 };
 
 exports.addRequisition = (req, res) => {
-  res.render('add-edit-req', { flashes: req.flash('error') });
+  res.render('add-edit-req', {
+    flashes: req.flash('error'),
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
+  });
 };
 
 exports.submitRequisition = async (req, res) => {
@@ -86,7 +92,11 @@ exports.submitRequisition = async (req, res) => {
 exports.editRequisition = async (req, res) => {
   let id = req.params.id;
   let requisition = await Requisition.findByPk(id);
-  res.render('add-edit-req', { requisition });
+  res.render('add-edit-req', {
+    requisition,
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
+  });
 };
 
 exports.deleteRequisition = async (req, res, next) => {

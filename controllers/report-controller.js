@@ -11,6 +11,8 @@ exports.addReport = async (req, res) => {
     requisition,
     team,
     flashes: req.flash('error'),
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
   });
 };
 
@@ -97,6 +99,8 @@ exports.editReport = async (req, res) => {
     requisition,
     team,
     flashes: req.flash('error'),
+    isSupervisor: req.user.supervisorId === 1,
+    isAdmin: req.user.roleId === 2,
   });
 };
 

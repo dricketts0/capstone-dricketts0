@@ -14,40 +14,65 @@ router.post('/login', authController.loginUser);
 router.get('/logout', authController.logoutUser);
 
 router.use(authController.isLoggedIn);
+router.use(authController.isUser);
 router.get('/', expenseController.showDash);
 router.get('/addReq', expenseController.addRequisition);
 router.post('/submitReq', expenseController.submitRequisition);
 router.get('/editReq/:id', expenseController.editRequisition);
-router.get('/deleteReq/:id', expenseController.deleteRequisition, budgetController.updateBudgets);
+router.get(
+  '/deleteReq/:id',
+  expenseController.deleteRequisition,
+  budgetController.updateBudgets,
+);
 
 router.get('/addReport/:id', reportController.addReport);
-router.post('/submitExpenses', reportController.submitExpenses, budgetController.updateBudgets);
+router.post(
+  '/submitExpenses',
+  reportController.submitExpenses,
+  budgetController.updateBudgets,
+);
 router.get('/editReport/:id', reportController.editReport);
-router.get('/deleteReport/:id', reportController.deleteReport, budgetController.updateBudgets);
+router.get(
+  '/deleteReport/:id',
+  reportController.deleteReport,
+  budgetController.updateBudgets,
+);
 
-//router.use(adminController.isAdmin)
-router.get('/admin', adminController.adminDash);//authorizeRole([3])
+router.get('/users', authorizedRole([2]), adminController.listUsers);
+router.post('/updateUsers', authorizedRole([2]), adminController.updateUsers);
+router.get('/editUser/:id', authorizedSupervisor([1]), userController.editUser);
+router.post(
+  '/updateUser',
+  authorizedSupervisor([1]),
+  userController.updateUser,
+);
 
-router.get('/users', adminController.listUsers);
-router.post('/updateUsers', adminController.updateUsers);//authorizeRole([3]), 
-router.get('/editUser/:id', userController.editUser);
-router.post('/updateUser', userController.updateUser);
-//will change to [3] if create userbudget model
+router.get('/teams', authorizedRole([2]), teamController.listTeams);
+router.get(
+  '/teamProfile/:id',
+  authorizedSupervisor([1]),
+  teamController.teamProfile,
+);
+router.get('/addTeam', authorizedRole([2]), teamController.addTeam);
+router.post('/submitTeam', authorizedRole([2]), teamController.submitTeam);
+router.get('/editTeam/:id', authorizedRole([2]), teamController.editTeam);
+router.get('/deleteTeam/:id', authorizedRole([2]), teamController.deleteTeam);
 
-router.get('/teams', teamController.listTeams);
-router.get('/teamProfile/:id', teamController.teamProfile); 
-router.get('/addTeam', teamController.addTeam);
-router.post('/submitTeam', teamController.submitTeam);
-router.get('/editTeam/:id', teamController.editTeam);
-router.get('/deleteTeam/:id', teamController.deleteTeam);
-
-function authorizeRole(roles) {
+function authorizedRole(roles) {
   return (req, res, next) => {
     if (roles.includes(req.user.roleId)) {
       return next();
     }
     res.redirect('/');
-    //res.status(401).send();
+  };
+}
+
+function authorizedSupervisor(status) {
+  return (req, res, next) => {
+    if (status.includes(req.user.supervisorId) || authorizedRole([2])) {
+      return next();
+    }
+    res.redirect('/');
   };
 }
 

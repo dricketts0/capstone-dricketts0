@@ -5,11 +5,18 @@ exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-
   if (req.url != '/favicon.ico') {
     req.session.redirectTo = req.url;
   }
+  res.redirect('/login');
+};
 
+exports.isUser = async (req, res, next) => {
+  let user = await User.findByPk(req.user.id);
+  if (user.roleId > 0) {
+    return next();
+  }
+  req.flash('error', 'Not authorized to use this application.');
   res.redirect('/login');
 };
 
@@ -38,7 +45,7 @@ exports.registerUser = (req, res, next) => {
     registeredUser.totalEncumbered;
     registeredUser.totalSpent;
     registeredUser.balance;
-    await registeredUser.save()
+    await registeredUser.save();
     req.flash('success', 'Welcome new user: ' + username);
     next();
   });
@@ -51,9 +58,9 @@ exports.loginPage = (req, res) => {
 };
 
 exports.loginUser = (req, res, next) => {
-  let failDirect = '/' || '/login'
+  let failDirect = '/' || '/login';
   passport.authenticate('local', {
-    successRedirect: '/admin',
+    successRedirect: '/users',
     failureRedirect: failDirect,
     failureFlash: true,
     successFlash: 'Welcome',

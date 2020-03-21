@@ -16,7 +16,7 @@ exports.isUser = async (req, res, next) => {
   if (user.roleId > 0) {
     return next();
   }
-  req.flash('error', 'Not authorized to use this application.');
+  req.flash('error', ' Not Authorized to use application.');
   res.redirect('/login');
 };
 
@@ -46,7 +46,7 @@ exports.registerUser = (req, res, next) => {
     registeredUser.totalSpent;
     registeredUser.balance;
     await registeredUser.save();
-    req.flash('success', 'Welcome new user: ' + username);
+    req.flash('success', 'Welcome');
     next();
   });
 };

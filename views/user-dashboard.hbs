@@ -37,7 +37,7 @@
 <h6 class="alert alert-success">{{flashSuccess.[0]}}</h6>
 {{/if}}
 {{#if flashError}}
-{{flashError.[0]}}
+<h6 class="alert alert-warning">{{flashError.[0]}}</h6>
 {{/if}}
 <br>  
 <a href="/addReq" class="btn btn-info float-right">Add an Expense Requisition</a>
@@ -59,8 +59,6 @@
     </tr>
 </table>
 <br><br>
-
-<br><br>
 <h2>Requisitions</h2>
 <table class="table table-striped">
   <thead class="thead-dark">
@@ -68,7 +66,7 @@
       <th></th>
       <th></th>
       <th></th>
-      <th>Expense Req Number</th>
+      <th>Req Number</th>
       <th>Funds Encumbered</th>
       <th>Total Spent</th>
       <th>Balance of Requisition</th>

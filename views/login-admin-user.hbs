@@ -1,13 +1,71 @@
-<form action="/login" method="post">
-    Username: <input type="text" name="username"/>
-    <br/>
-    Password: <input type="password" name="password"/>
-    <br/>
-    <br/>
-    <button type="submit">Login</button>
-</form>
-{{#if flashes}}
-{{ flashes }}
-{{/if}}
-<br><br>
-<a href="/register">New User? Please register here. Thx!</a>
+
+<body class="text-center">
+  <br><br>
+  <h1>Welcome to Team Expense!</h1>
+  <br>
+  {{#if flashes}}
+    <h6 class="alert alert-warning">{{flashes}}</h6>
+  {{/if}}<br>
+<div class="row">
+    <div class="col-sm-6">
+       <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">What is it?</h5>
+                <br>
+                <h6 class="card-subtitle mb-2 text-muted">An application that enables users to track expenses made by a team.</h6>
+                <br>
+                <div class="row">
+                    <ul class="col list-group list-group-flush ">
+                        <li class="list-group-item">
+                        Node.js
+                        </li>
+                        <li class="list-group-item">
+                        Javascript 
+                        </li>
+                        <li class="list-group-item">
+                        HTML5/Bootstrap
+                        </li>
+                        <li class="list-group-item">
+                        Express 
+                        </li>
+                    </ul>
+                    <ul class="col list-group list-group-flush border-bottom">
+                        <li class="list-group-item">
+                        PostgreSQL
+                        </li>
+                        <li class="list-group-item">
+                        ORM: Sequelize
+                        </li>
+                        <li class="list-group-item">
+                        Docker 
+                        </li>
+                        <li class="list-group-item">
+                        Command Line Shell: Git Bash
+                    </ul>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+       <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Sign in</h5>
+                <br>
+                <form action="/login" method="post">
+                   <label for="inputUserName" class="sr-only">User Name</label>
+                    <input type="text" id="inputUserName" class="form-control" placeholder="User Name" required="" autofocus="" name="username">
+                    <br>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" name="password">
+                    <br><br>
+                    <button class="btn btn-lg btn-info btn-block" type="submit">Login</button>
+                </form>
+                <br><br>
+                <a href="/register" align="center">New User? Please register here.</a>
+            </div>
+        </div>
+    </div>    
+</div>
+<p class="mt-5 mb-3 text-muted">Created by Diana Ricketts, student of University of Arkansas, IT Readiness Program: Back-End Web Developement</p>
+</body>

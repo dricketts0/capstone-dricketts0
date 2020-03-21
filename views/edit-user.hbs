@@ -38,10 +38,9 @@
 {{/if}}
 <br>
 <div class="container-fluid" width="100%">
-  <br><br>
   <form action="/updateUser" method="POST" >
-  <div class="row" align="left">
-    <div class="form-group col-md-3">              
+    <div class="row" align="left">
+      <div class="form-group col-md-3">              
         <label for="staticFirstName">First Name </label>
         <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticFirstName" name="firstName" value="{{aUser.firstName}} "/>
       </div>
@@ -51,25 +50,22 @@
       </div>
       <div class="form-group col-md-3">
        <label for="staticDept">Department </label>
-      <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticDept" value="{{team.teamName}}"/>
+      <input readonly class="form-control-plaintext" type="text" id="staticDept" value="{{team.teamName}}"/>
       </div>
       <div class="form-group col-md-3">   
         <label for="staticEmail" class="col-form-label">Email </label>   
         <input {{#if isSupervisor}}readonly class="form-control-plaintext"{{/if}} type="text" id="staticEmail" name="email" value="{{aUser.email}}"/> 
       </div>    
-  </div>
-  
+    </div>
     <br><br>
-            <div class="form-group" align="center">
-                <label for="budget" class="col-form-label mr-2"><h4>New Budget</h4></label>    
-                <input class="mr-2"id="budget" min="0" name="budget" value="{{aUser.budget}}"/>
-                <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit" class="btn btn-info btn-sm" align="left">Update</button>
-            </div>  
-        
-    </form>
-    <br><br>
-
+    <div class="form-group" align="center">
+      <label for="budget" class="col-form-label mr-2"><h4>New Budget</h4></label>    
+      <input type="number" class="mr-2"id="budget" min="0" name="budget" value="{{aUser.budget}}"/>
+      <input type="hidden" name="id" value="{{id}}"/>
+      <button type="submit" class="btn btn-info btn-sm" align="left">Update</button>
+    </div>        
+  </form>
+  <br><br>
   <table class="table">
   <thead class="thead-light">
     <tr>

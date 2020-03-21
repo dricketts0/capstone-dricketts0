@@ -31,7 +31,10 @@ exports.addRequisition = (req, res) => {
 };
 
 exports.submitRequisition = async (req, res) => {
-  if (req.body.encumbered < req.body.totalSpent) {
+  if (
+    Number.parseFloat(req.body.encumbered) <
+    Number.parseFloat(req.body.totalSpent)
+  ) {
     req.flash('error', 'Cannot Encumber less than what is spent.');
     res.redirect('/');
   } else {

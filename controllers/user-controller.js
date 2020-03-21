@@ -32,6 +32,7 @@ exports.editUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   let body = req.body;
   let user = await User.findByPk(body.id);
+  console.log(req.body);
 
   if (
     Number.parseFloat(body.budget) < Number.parseFloat(user.totalEncumbered)

@@ -33,29 +33,89 @@
 
 <div class="container-fluid">
   <br><br>
-    <h2>Add Expense Requisition</h2>
+    <h1>{{#if requisition}}Edit Expense Requisition {{else}} Add Expense Requisition{{/if}}</h1>
     <br><br>
     <form action="/submitReq" method="POST">
       <div>
+        <div class="form-group row">
+          <div class="form-group col-sm-2" align="center">
+            <label for="inputEncumbered" class="col-form-label">Amount</label>
+          </div>
+          <div class="form-group col-sm-10" align="right">
+            <input id="inputEncumbered" class="form-control" type="number" placeholder="0.00" min="0" step="0.01" name="encumbered" value="{{requisition.encumbered}}"/>
+          </div>
+        </div>
+        <div class="form-group row">
+              <div class="form-group col-sm-2" align="center">
+                  <label for="inputDepart" class="col-form-label">Event Date</label>
+              </div>
+              <div class="form-group col-sm-4" align="left">
+                  <input  id="inputDepart" class="form-control" type="date" name="departureDate" value="{{requisition.departureDate}}"/>
+              </div>
+              <div class="form-group col-sm-2" align="center">
+                  <label for="inputDestination" class="col-form-label">Destination</label>
+              </div>
+              <div class="form-group col-sm-4" align="left">
+                  <input id="inputDestination" class="form-control" type="text" name="destination" value="{{requisition.destination}}"/>
+              </div> 
+        </div>
+        <div class="form-group row">
+              <div class="form-group col-sm-2" align="center">
+                  <label for="inputReturn" class="col-form-label">End Date</label>
+              </div>
+              <div class="form-group col-sm-4" align="left">
+                  <input  id="inputReturn" class="form-control" type="date" name="returnDate" value="{{requisition.returnDate}}"/>
+              </div> 
+              <div class="form-group col-sm-2" align="center">
+                  <label for="inputDepartFrom" class="col-form-label">Departing From</label>
+              </div>
+              <div class="form-group col-sm-4" align="left">
+                  <input  id="inputDepartFrom" class="form-control" type="text" name="departLocation" value="{{requisition.departLocation}}"/>
+              </div>
+            
+        </div>
+        <div class="form-group row">
+          <div class="form-group col-sm-2" align="center">
+            <label for="inputPurpose" class="col-form-label">Purpose</label>
+          </div>
+          <div class="form-group col-sm-10" align="right">
+            <input id="inputPurpose" class="form-control" type="text" name="purpose" value="{{requisition.purpose}}"/>
+          </div>
+        </div>
+        <div class="form-group row">
+           <div class="form-group col-sm-2" align="center">
+              <label for="inputObjectives" class="col-form-label">Objectives </label>
+            </div>
+          <div class="form-group col-sm-10" align="right">
+            <textarea id="inputObjectives" class="form-control" type="text" rows="5" id="inputObjectives" name="objectives" value="{{requisition.objectives}}">{{requisition.objectives}}</textarea>
+          </div>
+        </div>
+        <input type="hidden" name="id" value="{{requisition.id}}"/>
+        <input type="hidden" name="totalSpent" value="{{requisition.totalSpent}}"/>
+        <input type="hidden" name="balance" value="{{requisition.balance}}"/> 
+        <br><br>
+        <button type="submit" class="float-right">Submit</button>
+      </div>
+    </form>     
+     
+      
+      
+      
+      {{!-- <div>
           Funds Encumbered $<input type="number" placeholder="0.00" min="0" step="0.01" name="encumbered" value="{{requisition.encumbered}}"/>
           <br>
-          Date of Departure <input type="text" placeholder="MM/DDYYYY" maxlength="10" name="departureDate"/>
+          Date of Departure <input type="date" name="departureDate"/>
           <br>
-          Date of Return <input type="text" placeholder="MM/DD/YYYY" maxlength="10" name="returnDate"/>
+          Date of Return <input type="date" name="returnDate"/>
           <br>
           Location of Departure <input type="text" name="departLocation"/>
           <br>
           Destination <input type="text" name="destination"/>
           <br>
           Purpose of Expense <input type="text" name="purpose"/>
-          Objectives <textarea class="form-control" rows="8" name="objectives"></textarea>
-      </div>
-      <input type="hidden" name="id" value="{{requisition.id}}"/>
-      <input type="hidden" name="totalSpent" value="{{requisition.totalSpent}}"/>
-      <input type="hidden" name="balance" value="{{requisition.balance}}"/> 
-      <br><br>
-      <button type="submit">Submit</button>
-    </form>
+          Objectives <textarea class="form-control" rows="5" name="objectives"></textarea>
+      </div> --}}
+ 
     <br><br>
 
 </div>

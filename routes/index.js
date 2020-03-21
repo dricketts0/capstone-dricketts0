@@ -15,6 +15,7 @@ router.get('/logout', authController.logoutUser);
 
 router.use(authController.isLoggedIn);
 router.use(authController.isUser);
+
 router.get('/', expenseController.showDash);
 router.get('/addReq', expenseController.addRequisition);
 router.post('/submitReq', expenseController.submitRequisition);

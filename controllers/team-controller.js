@@ -1,8 +1,12 @@
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const Team = require('../db').Team;
 const User = require('../db').User;
+const Requisition = require('../db').Requisition;
+const Report = require('../db').Report;
 
 exports.listTeams = async (req, res) => {
-  let team = await Team.findAll();
+  let team = await Team.findAll({ where: { id: { [Op.gt]: 1 } }, order: [['teamCode', 'ASC']]});
   res.render('teams', {
     team,
     isSupervisor: req.user.supervisorId === 1,
@@ -14,9 +18,11 @@ exports.teamProfile = async (req, res) => {
   let id = req.params.id;
   let team = await Team.findByPk(id);
   let teamUsers = await User.findAll({ where: { teamId: id } });
+  let requisitions = await Requisition.findAll({ where: {teamId: id } });
   res.render('team-profile', {
     team,
     teamUsers,
+    requisitions,
     flashes: req.flash('error'),
     isSupervisor: req.user.supervisorId === 1,
     isAdmin: req.user.roleId === 2,

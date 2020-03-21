@@ -33,7 +33,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       roleId: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: 2,
       },
       teamId: {
         type: Sequelize.INTEGER,

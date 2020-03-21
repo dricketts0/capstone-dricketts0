@@ -31,14 +31,14 @@
   </div>
 </nav>
 <br><br> 
-<h1>TEAM PROFILE</h1>
-<br><br>
-<table class="table table-striped">
-  
+<h1>TEAM PROFILE: {{team.teamCode}} - {{team.teamName}}</h1>
+<br>
 {{#if flashes}}
-{{ flashes }}
+<h6 class="alert alert-warning">{{flashes.[0]}}</h6>
 {{/if}}
-  <h4>Budget for {{team.teamCode}} - {{team.teamName}}</h4>
+<br>
+<table class="table table-striped">
+  <h4>Budget</h4>
   <thead class="thead-dark">
     <tr>
       <th>Team Budget</th>
@@ -55,7 +55,7 @@
    </tr>
 </table> 
 <br><br>
-<h4>Members of {{team.teamCode}} - {{team.teamName}}</h4>
+<h4>Team Members</h4>
 <table class="table table-hover">
   <thead class="thead-dark">
     <tr>
@@ -83,12 +83,10 @@
   {{/each}}
 </table>
 <br><br>
+<h4>Requisitions</h4>
 <table class="table table-hover">
   <thead class="thead-dark">
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
       <th>Expense Req Number</th>
       <th>Start Date</th>
       <th>Funds Encumbered</th>
@@ -96,37 +94,13 @@
       <th>Balance of Requisition</th>
     </tr>
     </thead>
-{{#each teamUsers}}
-  {{#each this.requisitions}}
+  {{#each requisitions}}
     <tr>
-      <td><a href="/editReq/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
-      <td><a href="/addReport/{{this.id}}" class="btn btn-secondary" data-toggle="button">Add Expense Report</a></td>
-      <td><a href="/deleteReq/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
       <td>{{this.id}}</td>
       <td>{{this.departureDate}}</td>
       <td>{{this.encumbered}}</td>
       <td>{{this.totalSpent}}</td>
       <td>{{this.balance}}</td>
     </tr>
-    <tr class="table-info">
-      <thead>
-        <td>Filed Reports towards Requisition</td>
-      </thead>
-    </tr>
-    <tr>
-      <thead class="table-info">
-        <th></th>
-        <th></th>
-        <th class="align-middle">Report Number</th>
-        <th class="align-middle">Total of Expenses</th>
-      </thead>
-    </tr>
-     {{#each this.reports }}
-      <td><a href="/editReport/{{this.id}}" class="btn btn-info" data-toggle="button">Edit</a></td>
-      <td><a href="/deleteReport/{{this.id}}" class="btn btn-warning" data-toggle="button">Delete</a>
-      <td>{{this.id}}</td>
-      <td>{{this.expenseTotal}}</td>
-     {{/each}}
-   {{/each}}
-  {{/each}}
+  {{/each}}  
 </table>

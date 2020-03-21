@@ -49,8 +49,9 @@
         <th></th>
       </tr>
     </thead>
+     
    {{#each team}}
-      <tr>
+        <tr>
         <td> {{this.id}} </td>
         <td><a href="/teamProfile/{{this.id}}">{{this.teamCode}} - {{this.teamName}}</a></td>
         <td> {{this.budget}}</td>
@@ -58,9 +59,8 @@
         <td>{{this.totalSpent}}</td>
         <td> {{this.balance}}</td>
         <td><a href="/editTeam/{{this.id}}" class="btn btn-info" data-toggle="button" aria-pressed="false">Edit</a></td>
-        <td><a href="/deleteTeam/{{this.id}}" class="btn btn-warning" data-toggle="button" aria-pressed="false">Delete</a>
-        </td>
-      </tr>  
+        <td><a href="/deleteTeam/{{this.id}}" class="btn btn-warning" data-toggle="button" aria-pressed="false">Delete</a></td>
+        </tr>  
     {{/each}}
   </table>
 </div>
